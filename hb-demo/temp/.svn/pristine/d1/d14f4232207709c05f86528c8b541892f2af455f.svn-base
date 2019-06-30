@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>总资产</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/home/recognition.css" />
+		<style type="text/css">
+			.article>p {
+				margin: 0;
+				font-size: 0.4rem;
+				text-align: justify;
+			}
+
+			.y-hua {
+				height: 7rem;
+				overflow-y: scroll;
+			}
+
+			::-webkit-scrollbar {
+				width: 3px !important;
+				/* background-color:red; */
+			}
+
+			.popover,
+			.popover1{
+				height: 400px;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+			}
+			#p-box{
+				height:250px;
+				overflow-y: scroll;
+			}
+			.mui-table-view{
+				/* height:100%; */
+				overflow: hidden;
+			}
+			.mui-table-view,
+			.mui-table-view>p {
+				padding:0 0.5rem;
+			}
+			.mui-table-view-cell{
+				padding-left:0;
+				padding-right:0;
+			}
+			.mui-table-view-cell:after {
+				left:0;
+			}
+			.mui-btn{
+				width: 200px;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				background-color:#2450cb;
+				color:white;
+			}
+			
+			.mui-radio input[type=radio]{
+				top:6px;
+			}
+			.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div class="head">
+				<header class="mui-bar mui-bar-nav">
+					<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+					<h1 class="mui-title">认 筹</h1>
+				</header>
+				<div class="num">
+					<span style="color: #fff;margin-right: 1.35rem;font-size: 0.5rem;">USDT</span>
+					<span style="color: #fff;font-size: 0.5rem;" id="usdt-n">0.0</span>
+				</div>
+			</div>
+			<div class="contain">
+				<div id="time" class="times">
+					<span>0</span>
+					<span>0</span>
+					<span>:</span>
+					<span>0</span>
+					<span>0</span>
+					<span>:</span>
+					<span>0</span>
+					<span>0</span>
+				</div>
+				<div class="article y-hua">
+					<h4>认筹规则</h4>
+					<p>1、用户在指定时间内在EAKETOKEN认筹活动页面转入EAKE认筹页面进行认筹；</p>
+					<p>2、单个用户按照手中持仓量以10~20倍的额度进行认筹，用户可以在当期各个项目之间自主分配个人认筹额度。</p>
+					<h4>注意事项</h4>
+					<p>1、参与EAKETOKEN认筹活动的用户须完成个人身份验证；</p>
+					<p>2、不接受法律禁止地区的用户参与；</p>
+					<p>3、认筹期间，如发现认筹信息虚构等作弊行为，EAKETOKEN有权取消其参与资格；</p>
+					<p>4、EAKETOKEN拥有对本活动规则的最终解释权，并将根据情况对活动进行调整。</p>
+				</div>
+				<div class="article">
+					<div class="limit">
+						<h4>认筹额度</h4>
+						<!-- <span style="color: #E94033;">579000</span>
+						<span>/</span>
+						<span style="color: #60BF6C;">900000000</span> -->
+						<span id="fenzi" style="color: #E94033;">总量</span>
+						<span>：</span>
+						<span id="fenmu" style="color: #60BF6C;">5000/5000</span>
+					</div>
+					<div id="demo1" class="scrollBar mui-progressbar">
+						<span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="mult">
+				<div class="type-foo">
+					<img src="../../image/img-e%20(3).png">
+					<span>USDT</span>
+				</div>
+				<div style="height:100%;line-height:1.44rem;font-size: 0.35rem;padding-top:0.1rem;" v-html="bili">
+					<!-- {{list.eakePrice}} (E)：{{list.usdtPrice}} (T) -->
+				</div>
+				<div class="caculate">
+					<img src="../../image/sj%20(6).png" @click="num--">
+					<div style="width: 60%;">
+						<span v-text="num" style="color:#60BE6D;font-size: 0.46rem;"></span>
+						<span style="color: #333;font-size: 0.46rem;">/ 倍</span>
+					</div>
+					<img src="../../image/sj%20(7).png" @click="num++">
+				</div>
+			</div>
+
+			<div @click="tt" class="confirm">确认认筹</div>
+			<!-- @click="req" -->
+
+			<div id="popover" class="mui-popover popover">
+				<ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="font-size: 16px;">认筹协议：</li>
+				</ul>
+				<ul class="mui-table-view">
+					<div id="p-box">
+						<p  style="font-size: 12px;text-indent:2em;">当您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，或您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，或您以其他EAKE允许的方式实际使用EAKE服务时，即表示您以充分阅读、理解并接受本协议的全部内容，并与协议。当您承诺接受并遵循本协议的约定，届时您不应该以未阅读本协议。</p>
+					</div>
+				</ul>
+				<div class="mui-input-row mui-radio mui-left"  style="font-size: 12px;">
+					<label>我已阅读认筹协议</label>
+					<input name="radio" type="radio">
+				</div>
+				<button @click="req" type="button" class="mui-btn mui-btn-primary" style="margin-top: 15px;border-radius:40px;">确 定</button>
+			</div>
+			
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		$(function() {
+			var nums = 0;
+			var tim = $(".contain #time>span");
+			var t = {};
+			Tomorrow(function(d) {
+				t.y = d.y;
+				t.m = d.m;
+				t.d = d.d;
+			})
+			PourMeter(t.y, t.m, t.d, 0, 0, 0, function(data) {
+				// console.log(data)
+				nums = data.seconds;
+				tim.eq(0).html(JSON.stringify(data.hours).replace(/\"/g, "").substring(0, 1));
+				tim.eq(1).html(JSON.stringify(data.hours).replace(/\"/g, "").substring(1, 2));
+				tim.eq(3).html(JSON.stringify(data.minutes).replace(/\"/g, "").substring(0, 1));
+				tim.eq(4).html(JSON.stringify(data.minutes).replace(/\"/g, "").substring(1, 2));
+				tim.eq(6).html(JSON.stringify(data.seconds).replace(/\"/g, "").substring(0, 1));
+				tim.eq(7).html(JSON.stringify(data.seconds).replace(/\"/g, "").substring(1, 2));
+			});
+		})
+		mui.init()
+
+
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					num: 1,
+					bi: function() {
+						var nums = $('#fenmu').html();
+						return nums;
+					},
+					bili:'0 (T)：0 (E)',
+				}
+			},
+			mounted() {
+				var _this = this;
+				this.bia(this.bi());
+				$.ajax({
+					type: "POST",
+					url: api + '/renchou/log',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+				$.ajax({
+					type: "POST",
+					url: api + '/market',
+					data: {
+						userId: window.localStorage.getItem('userId')
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						// data.data.eakePrice+' (E)：'+data.data.usdtPrice+' (T)'
+						// var T = 1 / data.data.usdtPrice * data.data.eakePrice;
+						// _this.bili = 
+						
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+					}
+				});
+			},
+			methods: {
+				tt() {
+					mui('#popover').popover('toggle')
+				},
+				req() {
+					var _this = this;
+					if ($("input[name='radio']:checked").val() != 'on') {
+						mui.toast('请点击我已认筹');
+						return false;
+					}
+					mui('#popover').popover('hide')
+// 					$.ajax({
+// 						type: "POST",
+// 						url: api + '/renchou',
+// 						data: {
+// 							userId: window.localStorage.getItem('userId'),
+// 							userId: _this.num, //倍数
+// 						},
+// 						dataType: "json",
+// 						success: function(data) {
+// 							console.log(data)
+// 							if (data.code == 0) {
+// 								mui.toast(data.msg);
+// 								return false;
+// 							}
+// 							mui.toast('已确认认筹！')
+// 						},
+// 						error: function(error) {
+// 							console.log(error);
+// 						}
+// 					});
+  					mui.openWindow({
+						url: '../mine/filling.html?eake='+_this.list.eakePrice +'&usdt='+_this.list.usdtPrice +'&num='+ _this.num,
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+							aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+							duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+						},
+					})
+				},
+				bia(r) {
+					mui('#demo1').progressbar().setProgress(r.split('/')[0] / r.split('/')[1] * 100);
+				}
+			},
+			watch: {
+				num() {
+					if (this.num <= 1) {
+						this.num = 1;
+					};
+					if (this.num >= 10) {
+						this.num = 10;
+					}
+				}
+			}
+		});
+	</script>
+</html>

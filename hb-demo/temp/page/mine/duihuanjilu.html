@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>兑换记录</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/Prepaid.css">
+		<style>
+			.mui-table-view {
+				margin-top: 0.75rem !important;
+			}
+
+			.mui-table-view-cell {
+				margin:0.3rem 0;
+				border-bottom:1px solid rgba(14, 20, 84, 0.3);
+			}
+
+			.mui-table-view-cell>a {
+				margin-top: 0.1rem !important;
+			}
+
+			.p1,
+			.p2 {
+				color: #fe0903 !important;
+			}
+			/* 去掉下划线 */
+			.mui-table-view-cell:after {
+				background-color: transparent;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after {
+				background-color: transparent;
+			}
+			a.mui-active{
+				background-color: transparent !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<!--  href="./topup.html" -->
+				<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">兑换记录</h1>
+			</header>
+			<div class="mui-content">
+				<p v-show="show" style="text-align: center;margin-top: 1rem;display: none;">没有兑换记录...</p>
+				<ul class="mui-table-view mui-hidden">
+					<li class="mui-table-view-cell"  v-for="(i,j) in list">
+						<a href="javascript:;" class="mui-navigate-right">
+							<div class=" tit">
+								<span class="t1">兑换</span>
+								<div>
+									<span class="p1" v-text="i.coinCount">0</span>
+									<span class="p2" v-text="i.coinName"></span>
+								</div>
+							</div>
+							<div class=" tit">		
+								<span class="sp">兑换成功</span>
+								<div>
+									<time class="time-1">{{i.addTime |time_1}}</time>
+									<time class="time-2">{{i.addTime |time_2}}</time>
+								</div>
+							</div>
+						</a>
+					</li>
+					
+					
+				</ul>
+			</div>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el:"#app",
+			data(){
+				return{
+					show:false,
+					list:[],
+				}
+			},
+			mounted(){
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/exchange/log',
+					data: {
+						userId : window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+						_this.list = data.data;
+						if(_this.list.length == 0){
+							_this.show = true;
+						}
+						$(".mui-hidden").removeClass("mui-hidden");
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			},
+			filters: {
+				time_1(val) {
+					return val.trim().split(/\s+/)[0];
+				},
+				time_2(val) {
+					return val.trim().split(/\s+/)[1];
+				}
+			}
+		})
+	</script>
+</html>

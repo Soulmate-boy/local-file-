@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>扫一扫</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/* .mui-content {
+				width: 100%;
+				height: 100%;
+				padding-top: 1.34rem;
+				background: url("../../image/geren%20(10).png")no-repeat;
+				background-size: 100% 100%;
+			} */
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.44rem;
+				font-size: 0.6rem;
+			}
+
+
+			body {
+				background: #fff;
+			}
+
+			.type-box {
+				margin-top: 1.33rem;
+				box-sizing: border-box;
+				width: 100%;
+				overflow: hidden;
+				padding: 1.24rem 0.96rem 0;
+			}
+
+			.type-box>a>img {
+				width: 100%;
+				height: 3.74rem;
+				margin-bottom: 0.36rem;
+				border-radius: 0.4rem;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="box">
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">扫 一 扫</h1>
+			</header>
+			<div class="type-box">
+				<a href="javascript:;" onclick="theLogin('./gathering.html','../mine/login.html')"><img src="../../image/ss%20(1).png"
+					 alt=""></a>
+				<!-- <a href="javascript:;" onclick="sao()"><img src="../../image/ss%20(2).png" alt=""></a> -->
+				<a href="javascript:;" onclick="logins('./barcodeScan.html','./barcodeScan.html')"><img src="../../image/ss%20(2).png" alt=""></a>
+
+				<a href="javascript:;" onclick="theLogin('../mine/bill.html','../mine/login.html')"><img src="../../image/ss%20(3).png"
+					 alt=""></a>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/qrcode.js"></script>
+	<script src="../../js/public.js"></script>
+	<script>
+		mui.init();
+// 		var barcode = null;
+// 
+// 		function sao() {
+// 			console.log("sao")
+// 			// 创建Barcode扫码控件
+// 			// 			if (barcode != null) {
+// 			// 				barcode.cancel();
+// 			// 			}
+// 			barcode = null;
+// 			if (!barcode) {
+// 				barcode = plus.barcode.create('barcode', [plus.barcode.QR], {
+// 					top: '0px',
+// 					left: '0px',
+// 					width: '100%',
+// 					height: '100%',
+// 					position: 'fixed',
+// 					overflow: 'hidden',
+// 					frameColor: '#574afd',
+// 					scanbarColor: '#574afd'
+// 				});
+// 				barcode.onmarked = onmarked;
+// 				plus.webview.currentWebview().append(barcode);
+// 			}
+// 			barcode.start();
+// 		};
+// 		// 成功
+// 		function onmarked(type, result) {
+// 			var text = '未知: ';
+// 			switch (type) {
+// 				case plus.barcode.QR:
+// 					text = 'QR: ';
+// 					break;
+// 				case plus.barcode.EAN13:
+// 					text = 'EAN13: ';
+// 					break;
+// 				case plus.barcode.EAN8:
+// 					text = 'EAN8: ';
+// 					break;
+// 			}
+// 			// alert(text + result);
+// 			barcode.cancel();
+// 			CutString(result, function(d) {
+// 				if (JSON.stringify(d) == '{}') {
+// 					onerror("信息提取失败~")
+// 				} else {
+// 					if (d.userId || d.money || d.currency) {
+// 						barcode.cancel();
+// 						barcode.close();
+// 						mui.openWindow({
+// 							url: '../mine/topup.html?fromUserId=' + d.userId + '&toUserId=' + window.localStorage.getItem('userId') +
+// 								'&count=' + d.money + '&payPassword=' + window.localStorage.getItem('privateKey') + '&currency=' + d.currency,
+// 							extras: {
+// 								name: 'mui' //扩展参数
+// 							}
+// 						});
+// 					} else {
+// 						onerror("二维码有误！")
+// 					}
+// 				}
+// 			});
+// 		};
+// 		// 失败
+// 		function onerror(msg) {
+// 			alert(msg)
+// 			barcode.cancel();
+// 			barcode.close();
+// 		};
+// 		mui.back = function() {
+// 			console.log("back")
+// 			mui.toast('再按一次返回')
+// 			if (barcode != null) {
+// 				barcode.cancel();
+// 				barcode.close();
+// 				mui.back = function() {
+// 					barcode.cancel();
+// 					barcode.close();
+// 					window.location.href = '../../index.html';
+// 				}
+// 			} else {
+// 				barcode.cancel();
+// 				barcode.close();
+// 				window.location.href = '../../index.html';
+// 			};
+// 		};
+		// 		// 从相册中选择二维码图片 
+		// 		function scanPicture(){
+		// 		    plus.gallery.pick(function(path){
+		// 			    plus.barcode.scan(path,onmarked,function(error){
+		// 					plus.nativeUI.alert('无法识别此图片');
+		// 				});
+		// 		    }, function(err){
+		// 		        console.log('Failed: '+err.message);
+		// 		    });
+		// 		}
+	</script>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>mine</title>
+		<link rel="stylesheet" href="../css/clearCss.css">
+		<script src="../js/rem.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../css/css/mine/mine.css">
+		<style type="text/css">
+			.mui-content {
+				z-index: 10;
+				background-color: white;
+			}
+
+			footer>nav>a>img {
+				width: 0.82rem;
+				height: 0.72rem;
+				vertical-align: bottom;
+			}
+
+			.list .mui-active>div {
+				color: #1F4AC7;
+				font-size: 0.41rem;
+				font-weight: bold;
+			}
+
+			.mui-tab-label {
+				font-size: 0.41rem;
+				font-weight: bold;
+			}
+
+			footer .mui-tab-item.mui-active div {
+				color: #1F4AC7;
+			}
+
+			.box h5:nth-child(1) {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+
+			.box h5:nth-child(2) {
+				font-size: 0.46rem !important;
+				margin-top: 0.1rem;
+				margin-bottom: 0.1rem;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="mui-content" id="#app">
+			<header class="mui-bar mui-bar-nav" style="position:fixed;top:0;">
+				<h1 class="mui-title">个人中心</h1>
+			</header>
+			<div class="Personal">
+				<div class="box">
+					<a href="javascript:;">
+						<h5>参与资产</h5>
+						<h5>
+						</h5>
+						<p id="total">0.00 $</p>
+					</a>
+				</div>
+				<div class="box">
+					<a href="javascript:;" onclick="logins('./mine/accumulate.html','./mine/login.html')">
+						<h5>累计收益</h5>
+						<h5>EAKE</h5>
+						<p id="eakeCount">0.00 $</p>
+					</a>
+				</div>
+			</div>
+			<nav style="padding-left:0;padding-right:0;">
+				<div class="fn" onclick="logins('./mine/withdrawal.html','./mine/login.html')">
+					<a href="javascript:;">
+						<img src="../image/gr%20(1).png" alt="">
+						<p>提现</p>
+					</a>
+				</div>
+				<div class="fn" onclick="logins('./mine/topup.html','./mine/login.html')">
+					<a href="javascript:;">
+						<img src="../image/gr%20(3).png" alt="">
+						<p>充值</p>
+					</a>
+				</div>
+				<div class="fn" onclick="logins('./mine/friends.html','./mine/login.html')">
+					<a href="javascript:;">
+						<img src="../image/gr%20(2).png" alt="">
+						<p>邀约</p>
+					</a>
+				</div>
+			</nav>
+		</div>
+		<div class="list-menu">
+			<div class="list">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell more">
+						<a class="mui-navigate-right">
+							<span>量化管理</span>
+							<spam>更多</spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/shouyi.html','./mine/login.html')" class="mui-navigate-right">
+							<span>我的收益</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell more">
+						<a class="mui-navigate-right">
+							<span>量化账单</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/collectionBill.html','./mine/login.html')" class="mui-navigate-right">
+							<span>收款账单</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/InviteBill.html','./mine/login.html')" class="mui-navigate-right">
+							<span>邀约清单</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/myKey.html','./mine/login.html')" class="mui-navigate-right">
+							<span>我的秘钥</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/feadback.html','./mine/login.html')" class="mui-navigate-right">
+							<span>意见反馈</span>
+							<spam></spam>
+						</a>
+					</li>
+					<li onclick="clearCache()" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<span>清除缓存</span>
+							<spam></spam>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-loading" style="position: fixed;left: 50%;top:50%;transform: translate(-50%,-50%);display: none;">
+				<div class="mui-spinner" style="width: 1.5rem;height: 1.5rem;">
+				</div>
+			</div>
+
+			<div class="list">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" onclick="logins('./mine/Setup.html','./mine/login.html')" class="mui-navigate-right">
+							<span>设置</span>
+							<spam></spam>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<footer>
+			<nav class="mui-bar mui-bar-tab">
+				<a id="home" href="../index.html" class="mui-tab-item">
+					<img src="../image/s%20(15).png">
+					<div class="mui-tab-label">首页</div>
+				</a>
+				<a id="number" href="./number.html" class="mui-tab-item">
+					<img src="../image/s%20(17).png">
+					<div class="mui-tab-label">数字资产</div>
+				</a>
+				<a id="market" href="./market.html" class="mui-tab-item">
+					<img src="../image/s%20(20).png">
+					<div class="mui-tab-label">行情</div>
+				</a>
+				<!-- TODO--判断是否登录 进入login页面（登录页面） -->
+				<a id="mine" href="./mine.html" class="mui-tab-item mui-active">
+					<img src="../image/s%20(22).png">
+					<div class="mui-tab-label">个人中心</div>
+				</a>
+			</nav>
+		</footer>
+	</body>
+	<script src="../js/api.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/translate.js"></script>
+	<script src="../js/language.js"></script>
+	<script src="../js/public.js"></script>
+	<script src="../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		mui('.mui-bar-tab').on('tap', 'a', function() {
+			window.top.location.href = this.href;
+		});
+
+		$(function() {
+			if (window.localStorage.getItem('userId') == null || window.localStorage.getItem('userId') == '') {
+				mui.openWindow({
+					url: './mine/login.html',
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+				})
+			};
+			$.ajax({
+				type: "POST",
+				url: api + '/',
+				data: {
+					userId: window.localStorage.getItem('userId'),
+				},
+				dataType: "json",
+				success: function(data) {
+					if (data.code == 0) {
+						mui.toast('加载失败~');
+						return false;
+					}
+					$("#total").text(data.data.total);
+				},
+				error: function(error) {
+					console.log(error);
+					window.location.href = '../404.html';
+				}
+			})
+			$.ajax({
+				type: "POST",
+				url: api + '/user/wallet ',
+				data: {
+					userId: window.localStorage.getItem('userId'),
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data)
+					if (data.code == 0) {
+						mui.toast('加载失败~');
+						return false;
+					}
+					$("#eakeCount").text(data.data.userWallet.eakeAvailableCount);
+				},
+				error: function(error) {
+					console.log(error);
+					window.location.href = '../404.html';
+				}
+			});
+		})
+
+		var timer = null;
+
+		function clearCache() {
+			if (timer !== null) {
+				if (new Date().getTime() - timer < 120000) {
+					mui.toast("缓存已清空,请稍后重试！");
+				} else if (new Date().getTime() - timer > 120000) {
+					timer = null;
+				}
+			} else {
+				$(".mui-loading").css("display", "block");
+				setTimeout(function() {
+					$(".mui-loading").css("display", "none");
+					mui.toast('成功清除缓存!', {
+						duration: 'short',
+						type: 'div'
+					});
+				}, Math.random() * 600 + 600);
+				timer = new Date().getTime();
+			}
+
+		}
+
+		$(".more").on('click', function() {
+			mui.toast('敬请期待！')
+		})
+
+
+// 		// 判断是否是当前页面
+// 		function plusReady() {
+// 			var ws = plus.webview.currentWebview();
+// 			console.log("当前Webview窗口：" + ws.getURL());
+// 			var URL=plus.webview.currentWebview().getURL().split("/");
+// 			if (URL[URL.length - 1] == "mine.html") {
+// 				//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+// 				var first = null;
+// 				mui.back = function() {
+// 					if (!first) {
+// 						first = new Date().getTime();
+// 						mui.toast('再按一次退出应用');
+// 						setTimeout(function() {
+// 							first = null;
+// 						}, 2000);
+// 					} else {
+// 						if (new Date().getTime() - first < 2000) {
+// 							plus.runtime.quit();
+// 						}
+// 					}
+// 				};
+// 			}
+// 		}
+// 		if (window.plus) {
+// 			plusReady();
+// 		} else {
+// 			document.addEventListener('plusready', plusReady, false);
+// 		}
+// 		mui.back = function(){
+// 			window.location.href = './market.html';
+// 		}
+		
+	</script>
+</html>

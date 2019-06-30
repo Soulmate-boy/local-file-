@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>收益记录</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/Prepaid.css">
+		<style type="text/css">
+			.mui-content {
+				margin-top: 0.7rem !important;
+			}
+
+			li.mui-table-view-cell .middle-info {
+				margin-top: -0.7rem;
+			}
+
+			#news .mui-table-view-cell {
+				width: 100%;
+				display: block;
+				height: 1.44rem;
+			}
+
+			#news .mui-table-view-cell a {
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+			}
+
+			#news .mui-table-view-cell .tits:nth-child(2)>div {
+				height: calc(1.44rem / 2);
+				line-height: 2.05rem;
+			}
+
+			#news .mui-table-view-cell .tits:nth-child(2)>div .p1,
+			#news .mui-table-view-cell .tits:nth-child(2)>div .p2 {
+				color: #01c86e;
+				font-size: 0.46rem;
+			}
+
+			#news .mui-table-view-cell .tits:nth-child(1) {
+				font-size: 0.46rem;
+				color: #333333;
+			}
+
+			#news .mui-table-view-cell .tits:nth-child(2)>div .time-1,
+			#news .mui-table-view-cell .tits:nth-child(2)>div .time-2 {
+				font-size: 0.36rem;
+				color: #333333;
+			}
+
+			#news .mui-table-view-cell .tits>div {
+				text-align: right !important;
+			}
+
+			.mui-table-view-cell>a:not(.mui-btn).mui-active {
+				background-color: transparent;
+			}
+			/* 去掉下划线 */
+			.mui-table-view-cell:before {
+				background-color: transparent;
+			}
+			.mui-table-view:before {
+				background-color: transparent;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--  href="./topup.html" -->
+			<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<!-- ../mine.html -->
+			<h1 class="mui-title">收益记录</h1>
+		</header>
+
+		<div id="news" class="mui-content" v-cloak>
+				<p v-show="show_txt" style="display: none;">暂无收款信息</p>
+				<img  v-show="show_img" src="../../image/timg%20(2).gif" style="position: absolute;width:20%;height:auto;margin:50% 0 0 50%;transform: translate(-50%,-50%);" alt="">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" v-show="show_list" style="display: none;" v-for="(i,j) in list.releaseLog">
+					<a id="aaa" href="javacsript:;">
+						<div class="tits">
+							<span class="t1">收益</span>
+						</div>
+						<div class="tits">
+							<div class="middle-info">
+								<span class="p1">{{i.releaseCount}}</span>
+								<span class="p2">{{i.coinName}}</span>
+							</div>
+							<div>
+								<time class="time-1">{{i.addTime |time_1}}</time>
+								<time class="time-2">{{i.addTime |time_2}}</time>
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el: "#news",
+			data() {
+				return {
+					list: {},
+					show_list: false,
+					show_txt: false,
+					show_img: true,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/releaseLog ',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						_this.show_list = true;
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						_this.list = data.data;
+						if (_this.list.length == 0) {
+							_this.show_txt = true;
+						}
+							_this.show_img = false;
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			},
+			filters: {
+				time_1(val) {
+					return val.trim().split(/\s+/)[0];
+				},
+				time_2(val) {
+					return val.trim().split(/\s+/)[1];
+				}
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>提现详情</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/mine/showDetails.css"/>
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="./withdrawal.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">提现详情</h1>
+			</header>
+
+
+			<!-- 成功 -->
+			<div class="type-box success" v-show="isOk" style="display: none;">
+				<div class="info">
+					<img class="bg" src="../../image/geren%20(2).png" alt="">
+					<img class="type-icon" src="../../image/geren%20(3).png" alt="">
+					<p>提现成功</p>
+					<p>-0.04453BTC</p>
+				</div>
+				<div class="info-detail">
+					<p>收货地址：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFH</p>
+					<p>交易接口：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSI</p>
+					<p>交易时间：</p>
+					<p class="retract">
+						<span>2019-3-25</span><span>17:36:52</span>
+					</p>
+				</div>
+				<div class="go-back"><a href="../mine.html">返 回</a></div>
+			</div>
+			<!-- 失败 -->
+			<div class="type-box error" v-show="isError" style="=display: none;">
+				<div class="info">
+					<img class="bg" src="../../image/geren%20(2).png" alt="">
+					<img class="type-icon" src="../../image/geren%20(4).png" alt="">
+					<p>提现失败</p>
+					<p>-0.04453BTC</p>
+				</div>
+				<div class="info-detail">
+					<p>收货地址：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFH</p>
+					<p>交易接口：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSI</p>
+					<p>交易时间：</p>
+					<p class="retract">
+						<span>2019-3-25</span><span>17:36:52</span>
+					</p>
+				</div>
+				<div class="go-back"><a href="../mine.html">返 回</a></div>
+			</div>
+
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#box",
+			data(){
+				return{
+					isOk:false,//成功
+					isError:false,//失败
+				}
+			},
+			mounted(){
+				var _this = this;
+				_this.isOk = true;
+				$.ajax({
+					type: "POST",
+					url: api + '',
+					data: {
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			}
+		})
+	</script>
+</html>

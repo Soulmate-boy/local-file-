@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>邀请好友</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				background-color: white;
+			}
+
+			.mui-content {
+				background-color: white;
+				/* padding-top: 1.94rem; */
+			}
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.44rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav .mui-pull-right {
+				line-height: 1.34rem;
+				font-size: 0.46rem;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+
+			nav {
+				position: fixed;
+				top: 2rem;
+				left: 0;
+				width: 100%;
+				height: 2.04rem;
+				background: #fff;
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+				box-shadow: 0px -2px 10px rgba(14, 20, 84, 0.3);
+				z-index: 20;
+			}
+
+			nav>div {
+				width: 50%;
+				height: 2.04rem;
+				text-align: center;
+				/* border: 1px solid red; */
+			}
+
+			nav .txt {
+				color: #666;
+				font-size: 0.46rem;
+				padding-top: 0.2rem;
+			}
+
+			.t-active {
+				color: #4a63cc !important;
+			}
+
+			ul.mui-table-view {
+				margin-top: 2.68rem;
+			}
+
+			.mui-table-view-cell {
+				height: 1.44rem;
+				line-height: 1rem;
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.mui-table-view-cell.mui-active {
+				background: none;
+			}
+
+			.mui-table-view:before {
+				background-color: rgba(0, 0, 0, 0);
+			}
+
+			.mui-table-view-cell>span {
+				font-size: 0.46rem;
+				width: 25%;
+				text-align: center;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+
+			.p1 {
+				color: #4962cb;
+				text-align: left !important;
+			}
+
+			.p2 {
+				font-size: 0.46rem;
+				line-height: 0.5rem;
+				color: #999;
+				text-align: right !important;
+				vertical-align: middle;
+			}
+
+			.mui-table-view:after {
+				background-color: transparent;
+			}
+		</style>
+
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<h1 class="mui-title">邀请记录</h1>
+		</header>
+		<div id="box" class="mui-content" v-cloak>
+			<nav>
+				<div @click="one" :class="shows ? 't-active' : ''" class="txt">
+					<span style="display: block;height:16px;" class="sp" v-text="list_1.length"></span>
+					<h4>一级好友</h4>
+				</div>
+				<div @click="tow" :class="!shows ? 't-active' : ''" class="txt">
+					<span style="display: block;height:16px;" class="sp" v-text="list_2.length"></span>
+					<h4>二级好友</h4>
+				</div>
+			</nav>
+			<p v-show="show_txt1" style="text-align: center;margin-top:3rem;display: none;">
+				还没有邀请记录，赶快去邀请吧！</p>
+			<p v-show="show_txt2" style="text-align: center;margin-top:3rem;display: none;">
+				还没有邀请记录，赶快去邀请吧！</p>
+			<ul class="mui-table-view" v-if="shows">
+				<li class="mui-table-view-cell" v-for="(i,j) in list_1" :key="j">
+					<span class="p1" v-text="i.userName"></span>
+					<span class="p1"></span>
+					<div>
+						<div class="p2" v-text="i.regTime"></div>
+						<div class="p2"></div>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view" v-if="!shows">
+				<li class="mui-table-view-cell" v-for="(i,j) in list_2" :key="j">
+					<span class="p1" v-text="i.userName"></span>
+					<span class="p1"></span>
+					<div>
+						<div class="p2" v-text="i.regTime"></div>
+						<div class="p2"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		const VM = new Vue({
+			el: '#box',
+			data() {
+				return {
+					shows: true,
+					list_1: [],
+					list_2: [],
+					show_txt1: false,
+					show_txt2: false,
+				}
+			},
+			methods: {
+				one(e) {
+					this.shows = true;
+					if (this.list_1.length == 0) {
+						this.show_txt1 = true;
+					}
+					this.show_txt2 = false;
+				},
+				tow(e) {
+					this.shows = false;
+					if (this.list_2.length == 0) {
+						this.show_txt2 = true;
+					}
+					this.show_txt1 = false;
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/inviteLog',
+					data: {
+						userName: window.localStorage.getItem('userName'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						};
+						_this.list_1 = data.data.first;
+						_this.list_2 = data.data.second;
+						if(_this.list_1.length == 0) {
+							_this.show_txt1 = true;
+						}
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			}
+		})
+	</script>
+</html>

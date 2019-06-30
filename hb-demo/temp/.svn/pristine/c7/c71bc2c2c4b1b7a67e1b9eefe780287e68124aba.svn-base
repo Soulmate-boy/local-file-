@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>下载</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body {
+				background: #fff;
+				box-sizing: border-box !important;
+				margin: 0;
+				padding: 0;
+			}
+
+			.head {
+				width: 100%;
+				height: 11.13rem;
+				background: url('../../image/dl-bg.jpg') no-repeat center/contain;
+			}
+
+			.info {
+				box-sizing: border-box;
+				padding: 2.53rem 2.36rem 0;
+				text-align: center;
+			}
+
+			.software-name {
+				font-size: 0.8rem;
+				color: #000;
+				font-weight: bold;
+			}
+
+			.version,
+			.update {
+				font-size: 0.6rem;
+				color: #000;
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+			}
+
+			.version {
+				margin: 0.94rem 0 0.96rem;
+			}
+
+			.update {
+				padding-bottom: 1.18rem;
+				border-bottom: 0.01rem solid #cecece;
+			}
+
+			.dl {
+				padding-top: 1.3rem;
+			}
+
+			.dl>a {
+				display: block;
+				font-size: 0.46rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url('../../image/btn-long.png') no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-bottom: 0.8rem;
+				margin-left: 50%;
+				transform: translateX(-50%);
+			}
+			/* .dl>a:last-child{
+				margin-bottom: 0;
+			} */
+		</style>
+
+	</head>
+	<body>
+		<div id="box">
+			<div class="head"></div>
+			<div class="info">
+				<div class="software-name">EAKE TOKEN</div>
+				<div class="version">
+					<span>1.0.0(版本)</span>
+					<span class="software-size">13.63MB</span>
+				</div>
+				<div class="update">
+					<span>更新于: 2018-11-23</span>
+					<span>11:30</span>
+				</div>
+			</div>
+
+			<div class="dl">
+				<!-- TODO  后台加入链接 -->
+				<a href="">下载安卓版</a>
+				<a href="">下载苹果版</a>
+			</div>
+
+
+
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+	</script>
+</html>

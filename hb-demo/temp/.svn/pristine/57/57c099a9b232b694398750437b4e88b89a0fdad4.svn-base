@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>找回密码</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background-color: white;
+			}
+
+			header.mui-bar {
+				background-color: white;
+			}
+
+			.mui-content {
+				margin-top: 1.34rem;
+				background-color: white;
+			}
+
+			.mui-icon.mui-icon-left-nav.mui-pull-left {
+				color: #6e01ee;
+				font-size: 0.6rem;
+				vertical-align: bottom;
+			}
+
+			.mui-bar .mui-icon {
+				margin-top: 5px;
+			}
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				box-shadow: none;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				padding-top: 0.6rem;
+			}
+
+			.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				color: #fff;
+				box-sizing: border-box;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white !important;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem !important;
+			}
+
+			.mui-input-row {
+				box-shadow: 0px 0px 8px rgba(14, 20, 84, 0.2);
+				margin-top: 0.6rem;
+				width: 10.62rem;
+				height: 1.44rem;
+				margin-left: calc((100% - 10.62rem)/2);
+			}
+
+			.mui-input-row label,
+			.mui-input-row input {
+				height: 100%;
+				font-size: 0.48rem;
+				line-height: 0.8rem;
+				color: #a2a2a2;
+				text-align: left;
+			}
+			.mui-input-row label{
+				padding:0;
+				display: flex;
+				align-items: center;
+			}
+
+			.confirm {
+				font-size: 0.48rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 2rem;
+			}
+
+			.mui-input-row .you {
+				float: left;
+				border-right: 1px solid #a2a2a2;
+				width: 5.5rem;
+				height: 100%;
+				border-radius: 0;
+			}
+
+			.pp {
+				width: 9.66rem;
+				margin-top: 0.6rem;
+				margin-left: calc((100% - 9.66rem)/2);
+				font-size: 0.48rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="./login.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">找回密码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-input-row">
+				<span class="mui-icon mui-icon-arrowdown" style="color:#a2a2a2;float:right;height:100%;line-height: 1.44rem;padding-right:10px;"></span>
+				<label style="color:#a2a2a2;">手机号</label>
+				<input id="psd" type="text" class="you" placeholder="">
+			</div>
+			<div class="mui-input-row">
+				<label>请输入私钥</label>
+				<input id="key" type="text" class="mui-input-clear" placeholder="">
+			</div>
+		</div>
+		<p class="pp">请输入私钥找回密码。忘记私钥将无法找回，请牢记你的私钥，请将其记在完全的地方。</p>
+		<!-- <button type="button" class="mui-btn">确 &nbsp;&nbsp;&nbsp;&nbsp;认</button> -->
+		<div onclick="requer()" class="confirm">确 认</div>
+
+
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		function requer() {
+			var psd = $('#psd').val(),
+				key = $('#key').val();
+			if (!(/^1[34578]\d{9}$/.test(psd))) {
+				mui.toast('手机号不符合规范');
+				return false;
+			} else if (key == '') {
+				mui.toast('请输入私钥')
+			} else {
+				$.ajax({
+					type: "POST",
+					url: api + '/user/findPassword',
+					data: {
+						userName: psd,
+						privateKey: key
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+						weindow.location.href = './login.html';
+					},
+					error: function(error) {
+						console.log(error);
+					window.location.href = '../404.html';
+					}
+				});
+
+			}
+		}
+	</script>
+</html>

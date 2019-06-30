@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>数字资产</title>
+		<link rel="stylesheet" href="../css/clearCss.css">
+		<script src="../js/rem.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../css/css/CommonStyle.css">
+		<link rel="stylesheet" type="text/css" href="../css/number.css" />
+	</head>
+	<body>
+		<header>
+			<p class="num01">数字资产</p>
+			<div>
+				<p class="num02">未来已来</p>
+				<p class="num03"><span style="margin-right: 0.1rem;">EAKE</span>时代</p>
+			</div>
+		</header>
+		<div id="number" v-cloak>
+			<img v-show="shows" src="../image/timg%20(2).gif" style="display: none;width:20%;height:auto;margin:0 0 0 50%;transform: translateX(-50%);"
+			 alt="">
+			<p v-show="show_txt" style="text-align: center;margin-top:1.5rem;display: none;">
+				网络故障，数据加载失败！！！</p>
+			<div class="inform" v-show="show" style="display: none;">
+				<!-- 上升 ETH USDT BTC EAKE -->
+				<!-- ---------------------------------------------------------------------- -->
+				<!-- :class="/^\-/.test('0') ? 'decline' : 'rise'" -->
+				<div class="inform-item rise" style="pointer-events: none;">
+					<img src="../image/img/img-4%20(1).jpg">
+					<div class="currency">EAKE</div>
+					<div class="c-money">${{money.eakePrice|prcse}}</div>
+					<!-- $options.filters.list_f_1() -->
+					<div class="arrow-t">
+						<!-- <img :src=" /^\-/.test('0') ? '../image/arrow2.png' : '../image/arrow1.png' "> -->
+						<span>{{list.eakeAvailableCount |prcse}}</span>
+						<!-- $options.filters.list_f_2() -->
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(2).jpg">
+					<div class="currency">BTC</div>
+					<div class="c-money">${{money.btcPrice |prcse}}</div>
+					<div class="arrow-t">
+						<span>{{list.btcAvailableCount |prcse}}</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(3).jpg">
+					<div class="currency">ETH</div>
+					<div class="c-money">${{money.ethPrice|prcse}}</div>
+					<div class="arrow-t">
+						<span>{{list.ethaAvailableCount |prcse}}</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img-e%20(3).png">
+					<div class="currency">USDT</div>
+					<div class="c-money">${{money.usdtPrice |prcse}}</div>
+					<div class="arrow-t">
+						<span>{{list.usdtAvailableCount |prcse}}</span>
+					</div>
+				</div>
+				<!-- ----------------------------------------------------------------------- -->
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(5).jpg">
+					<div class="currency">XRP</div>
+					<div class="c-money">${{0 |prcse}}</div>
+					<div class="arrow-t">
+						<span>0</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(6).jpg">
+					<div class="currency">LTC</div>
+					<div class="c-money">${{0 |prcse}}</div>
+					<div class="arrow-t">
+						<span>0</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(7).jpg">
+					<div class="currency">BCH</div>
+					<div class="c-money">${{0 |prcse}}</div>
+					<div class="arrow-t">
+						<span>0</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(8).jpg">
+					<div class="currency">EOS</div>
+					<div class="c-money">${{0 |prcse}}</div>
+					<div class="arrow-t">
+						<span>0</span>
+					</div>
+				</div>
+				<div class="inform-item rise">
+					<img src="../image/img/img-4%20(9).jpg">
+					<div class="currency">TRX</div>
+					<div class="c-money">${{0 |prcse}}</div>
+					<div class="arrow-t">
+						<!-- <img :src=" /^\-/.test('0') ? '../image/arrow2.png' : '../image/arrow1.png' "> -->
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<footer>
+			<nav class="mui-bar mui-bar-tab">
+				<a href="../index.html" class="mui-tab-item">
+					<img src="../image/img/n-img%20(9).jpg">
+					<div class="mui-tab-label">首页</div>
+				</a>
+				<a href="./number.html" class="mui-tab-item mui-active">
+					<img src="../image/img/s-(16).png">
+					<div class="mui-tab-label">数字资产</div>
+				</a>
+				<a href="./market.html" class="mui-tab-item">
+					<img src="../image/img/n-img%20(2).jpg">
+					<div class="mui-tab-label">行情</div>
+				</a>
+				<a href="./mine.html" class="mui-tab-item">
+					<img src="../image/img/n-img%20(7).jpg">
+					<div class="mui-tab-label">个人中心</div>
+				</a>
+			</nav>
+		</footer>
+	</body>
+
+	<script src="../js/api.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/translate.js"></script>
+	<script src="../js/language.js"></script>
+	<script src="../js/logding.js"></script>
+	<script>
+		mui.init()
+
+		mui('.mui-bar-tab').on('tap', 'a', function() {
+			window.top.location.href = this.href;
+		});
+
+		$(function() {
+			if (window.localStorage.getItem('userId') == null || window.localStorage.getItem('userId') == '') {
+				mui.openWindow({
+					url: './page/mine/login.html',
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+				})
+			}
+			
+			$(".inform-item").on('click', function() {
+				var coin = $(this).find(".currency").text();
+				var total=$(this).find(".arrow-t span").text();
+				mui.openWindow({
+					url: './mine/exchange.html?coin=' + coin+'&total='+total,
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+				})
+			})
+		})
+
+		new Vue({
+			el: "#number",
+			data() {
+				return {
+					list: {},
+					money: {},
+					show: false,
+					shows: true,
+					show_txt: false
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/wallet ',
+					data: {
+						userId: window.localStorage.getItem('userId')
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						_this.list = data.data.userWallet;
+						_this.show = true;
+						_this.shows = false;
+				
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+						_this.show_txt = true;
+						_this.shows = false;
+					}
+				});
+				// 价格
+				$.ajax({
+					type: "POST",
+					url: api + '/market',
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						_this.money = data.data;
+						console.log(_this.money);
+						_this.show = true;
+						_this.shows = false;
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+					}
+				});
+			},
+			methods: {
+
+			},
+			filters: {
+				prcse(val) {
+					return val == null || val == '' ? val = '0' : val = val;
+				},
+				list_f_1(val) {
+					return this.list.total == 'undefined' ? val = '0' : val = val;
+				},
+				list_f_2() {
+					return this.list.eake == 'undefined' ? val = '0' : val = val;
+				}
+			}
+		})
+		//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+// 		var first = null;
+// 		mui.back = function() {
+// 			if (!first) {
+// 				first = new Date().getTime();
+// 				mui.toast('再按一次退出应用');
+// 				setTimeout(function() {
+// 					first = null;
+// 				}, 2000);
+// 			} else {
+// 				if (new Date().getTime() - first < 2000) {
+// 					plus.runtime.quit();
+// 				}
+// 			}
+// 		};
+// 		mui.back = function(){
+// 			window.location.href = '../index.html';
+// 		}
+		
+	</script>
+</html>

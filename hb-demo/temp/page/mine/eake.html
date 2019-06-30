@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>EAKE钱包</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../../css/css/mine/accumulate.css">
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<img v-if="shows" src="../../image/timg%20(2).gif" style="width:20%;height:auto;margin:50% 0 0 50%;transform: translate(-50%,-50%);"
+			 alt="">
+			<h4 v-if="showss" style="display: none;">加载失败...</h4>
+			<div v-show="show" style="display: none;">
+				<div class="main">
+					<header class="mui-bar mui-bar-nav">
+						<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+						<h1 class="mui-title">EAKE钱包</h1>
+					</header>
+					<div class="head">
+						<p class="accumulate"><span style="margin-right: 0.5rem;">锁仓</span><span>{{list.eakeFreezeCount}}</span></p>
+						<div class="hr"></div>
+						<p class="yesterday"><span style="margin-right: 0.5rem;">释放</span><span>{{list.eakeAvailableCount}}</span></p>
+					</div>
+				</div>
+
+				<div class="contain">
+					<div class="sign">释放记录：</div>
+					<!-- list -->
+					<div class="ul-list">
+						<a href="javascript:;" class="ul-item" v-for="(item,index) in info.releaseLog">
+							<p>{{item.releaseCount | prcse}}</p>
+							<div><span v-text="item.addTime"></span></div>
+						</a>
+					<!-- 	<a href="javascript:;" class="ul-item" >
+							<p>{{释放数}}</p>
+							<div><span>{{时间}}</span></div>
+						</a> -->
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					list: {},
+					info:{},
+					show: true,
+					shows: false,
+					showss: false,
+				}
+			},
+			mounted() {
+				var _this = this;
+				var numm = 0;
+				var timer = setInterval(function() {
+					numm += 1;
+					if (numm >= 10) {
+						clearInterval(timer)
+						_this.shows = false;
+						_this.showss = true;
+					}
+					console.log(numm)
+				}, 1000)
+				$.ajax({
+					type: "POST",
+					url: api + '/user/wallet ',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						clearInterval(timer)
+						_this.list = data.data.userWallet;
+						_this.show = true;
+						_this.shows = false;
+
+					},
+					error: function(error) {
+						console.log(error);
+							window.location.href = '../404.html';
+					}
+				});
+				
+				$.ajax({
+					type: "POST",
+					url: api + '/user/releaseLog',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						clearInterval(timer)
+						_this.info = data.data;
+						console.log(_this.info)
+						_this.show = true;
+						_this.shows = false;
+				
+					},
+					error: function(error) {
+						console.log(error);
+							window.location.href = '../404.html';
+					}
+				});
+			},
+			filters: {
+				prcse(val) {
+					return "+" + val;
+				},
+			}
+		})
+	</script>
+</html>

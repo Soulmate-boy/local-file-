@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>充值记录</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/Prepaid.css">
+		<script type="text/javascript">
+			mui.init();
+		</script>
+		<style type="text/css">
+			.mui-content {
+				margin-top: 0.7rem !important;
+			}
+			.mui-bar-nav~.mui-content{
+				padding-top:40px;
+			}
+			.mui-table-view:after{
+				background-color: rgba(0,0,0,0);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<!--  href="./topup.html" -->
+				<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">充值记录</h1>
+			</header>
+			<div class="mui-content">
+				<ul class="mui-table-view">
+					<p v-if="show_font = !show_list" style="text-align: center;border: none;">没有记录...</p>
+					<li class="mui-table-view-cell" v-for="(i,j) in list" v-show="show_list" style="display: none;">
+						<a href="./prepaidSuccess.html" class="mui-navigate-right">
+							<div class=" tit">
+								<span class="t1">充值</span>
+								<div>
+									<span class="p1" v-text="'+'+i.count"></span>
+									<span class="p2" v-text="i.coinName"></span>
+								</div>
+							</div>
+							<div class=" tit">
+								<span class="sp">充值成功</span>
+								<div>
+									<time class="time-1" v-text="i.addTime"></time>
+									<!-- <time class="time-2">15:34:56</time> -->
+								</div>
+
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					list: [],
+					show_list:false,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/rechargeLog',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						_this.list = data.data;
+						if(_this.list.length != 0){
+							_this.show_list = true;
+						}
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				})
+			}
+		})
+	</script>
+</html>

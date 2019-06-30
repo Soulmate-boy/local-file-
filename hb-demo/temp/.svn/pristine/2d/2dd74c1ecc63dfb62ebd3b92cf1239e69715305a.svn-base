@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>兑换</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/exchange.css">
+		<style type="text/css">
+			.row1 .mui-input-row>span {
+				line-height: 1.44rem;
+			}
+
+			.mui-input-group:after {
+				background-color: transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<h1 class="mui-title">兑换</h1>
+			<!-- <a href="./record.html" class="mui-pull-right">提现记录</a> -->
+		</header>
+		<div class="mui-content" id="app" v-cloak>
+			<form class="row1 mui-input-group">
+				<div class="mui-input-row">
+					<span class="mui-icon mui-icon-forward"></span>
+					<label>选择币种</label>
+					<select class="se" name="currency" v-model="nowCurreny" style="font-size: 0.46rem;">
+						<!-- <option v-for="(cur,i) in nowCurrenyList" :value="i" v-text="cur"></option> -->
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label class="lab">当前币种数量</label>
+					<input id="nums" style="font-size: 0.46rem;" class="pl" type="text" v-model="d_b_num" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<span class="mui-icon mui-icon-forward"></span>
+					<label>选择兑换币种</label>
+					<select class="se" name="exCurreny" v-model="exCurreny" style="font-size: 0.46rem;">
+						<!--<option v-for="(cur,i) in exCurrenyList" :value="i" v-text="cur"></option>-->
+						<option value="0">EAKE</option>
+					</select>
+				</div>
+
+				<div class="mui-input-row">
+					<label class="lab">最大兑换数量</label>
+					<input id="" style="font-size: 0.46rem;" class="pl" type="text" :value='"EAKE "+ total' disabled="disabled">
+				</div>
+			</form>
+			<p style="padding:0.3rem;margin-bottom:0;font-size: 0.36rem;color:#666;word-break: break-word;">
+				只支持其他币种转换EAKE，不支持EAKE转换其他币种。
+			</p>
+			<form class="row1 mui-input-group">
+				<div class="mui-input-row">
+					<label>兑换数量</label>
+					<input id="number" v-model="nums" style="font-size: 0.46rem;" type="number" placeholder="请输入数量">
+				</div>
+				<div class="mui-input-row">
+					<label>兑换EAKE数量</label>
+					<input class="cline" style="font-size: 0.46rem;" type="text" v-model="d_num" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<label class="lab">手续费<span> (0.2%)</span></label>
+					<input id="network" style="font-size: 0.46rem;" type="text" placeholder="0" v-model="shou" disabled="disabled">
+				</div>
+			</form>
+			<p style="padding:0.3rem;margin-bottom:0;font-size: 0.36rem;color:#666;word-break: break-word;">
+				实际到账，以实际行情为准。
+			</p>
+			<form class="row2 mui-input-group" style="margin-top:0;">
+				<div class="mui-input-row">
+					<label>交易密码</label>
+					<input class="cline" id="payPassword" style="font-size: 0.46rem;" type="password" placeholder="请输入交易密码">
+				</div>
+			</form>
+
+			<div class="go-submit"><a @click="submit()" href="javascript:;">确 认 兑 换</a></div>
+
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					// Currency: ["EAKE", "ETH", "USDT", "BTC"], //币种种类
+					// 					Currency: ["ETH", "USDT", "BTC"], //币种种类
+					// 					nowCurrenyList: [], //当前币种
+					// 					exCurrenyList: [], //兑换币种
+					coin: "",
+					total: 0,
+					nowCurreny: 0,
+					exCurreny: 0,
+					d_b_num: 0,
+					ajax:false,
+					date_1:{},
+					nums:'',
+					d_num:'0',
+					shou:'EAKE($) 0.00',
+				}
+			},
+			watch:{
+				nums(nval,oval){
+					// console.log(nval,oval);
+					if(Number(nval) > this.total){
+						mui.toast('不能超过最大兑换数量');
+						nval = this.total;
+						this.nums = this.total;
+					};
+					this.d_num = Math.round( this.data_1.btcPrice / this.data_1.eakePrice * nval *1000000)/1000000;
+					this.shou = 'EAKE($)' + Math.round( this.data_1.btcPrice / this.data_1.eakePrice * (this.d_num * 0.002) *1000000)/1000000;
+				},
+			},
+			mounted() {
+				// 				this.nowCurrenyList = this.Currency;
+				// 				if (this.nowCurreny == 0) {
+				// 					this.exCurrenyList = this.Currency.filter((item, index) => {
+				// 						if (item != "EAKE") {
+				// 							return true;
+				// 						}
+				// 					})
+				// 				}
+				// /exchange?coinName=btc&coinCount=1&payPassword=123456&userId=1
+				var _this = this;
+				CutString(window.location.href, function(d) {
+					console.log(d);
+					_this.coin = d.coin;
+					_this.total = d.total;
+				})
+
+				if (this.coin != null && this.coin != "") {
+					$("[name=currency]").html('<option selected value="0">' + this.coin + '</option>');
+				};
+				
+				$.ajax({
+					type: "POST",
+					url: api + '/market',
+					data: {},
+					dataType: "json",
+					async: false,
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+						_this.data_1 = data.data;
+						
+						if(_this.ajax){
+							console.log(_this.data_1)
+							_this.coin == "BTC" ? _this.total = _this.data_1.btcPrice / _this.data_1.eakePrice * _this.d_b_num : 0.00;
+							_this.coin == "ETH" ? _this.total = _this.data_1.ethPrice / _this.data_1.eakePrice * _this.d_b_num : 0.00;
+							_this.coin == "USDT" ? _this.total = _this.data_1.usdtPrice / _this.data_1.eakePrice * _this.d_b_num : 0.00;
+							
+						}else{
+							_this.ajax = true;
+						}
+						
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast("查询失败~")
+					}
+				});
+
+				$.ajax({
+					type: "POST",
+					url: api + '/user/wallet',
+					data: {
+						userId: window.localStorage.getItem('userId')
+					},
+					dataType: "json",
+					async: false,
+					success: function(data) {
+						// console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+						_this.coin == "BTC" ? _this.d_b_num = data.data.userWallet.btcAvailableCount : 0.00;
+						_this.coin == "ETH" ? _this.d_b_num = data.data.userWallet.eakeFreezeCount : 0.00;
+						_this.coin == "USDT" ? _this.d_b_num = data.data.userWallet.usdtAvailableCount : 0.00;
+						
+						if(_this.ajax){
+							console.log(_this.data_1)
+							_this.coin == "BTC" ?  _this.total = Math.round( _this.data_1.btcPrice / _this.data_1.eakePrice * _this.d_b_num*1000000)/1000000 : 0.00;
+							_this.coin == "ETH" ?  _this.total = Math.round(_this.data_1.ethPrice / _this.data_1.eakePrice * _this.d_b_num*1000000)/1000000 : 0.00;
+							_this.coin == "USDT" ? _this.total = Math.round( _this.data_1.usdtPrice / _this.data_1.eakePrice * _this.d_b_num*1000000)/1000000 : 0.00;
+							
+						}else{
+							_this.ajax = true;
+						}
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast("查询失败~")
+					}
+				});
+
+			},
+			methods: {
+				submit() {
+					var $nums = $("#number").val(), //数量
+						$payPassword = $("#payPassword").val(); //资金密码
+					if ($nums.length <= 0) {
+						mui.toast('请输入正确兑换数量')
+						return false
+					} else if ($payPassword == '') {
+						mui.toast('请输入资金密码')
+						return false
+					}
+					$.ajax({
+						type: "POST",
+						url: api + '/exchange',
+						data: {
+							userId: window.localStorage.getItem('userId'),
+							coinName: this.coin,
+							coinCount: $nums, //数量
+							payPassword: $payPassword, //交易密码
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							}else{
+								mui.toast('兑换请求已提交！');
+								window.location.href = './showDetails.html';
+							}
+						},
+						error: function(error) {
+							console.log(error);
+							window.location.href = '../404.html';
+						}
+					});
+
+				},
+			},
+			// 			watch: {
+			// 				nowCurreny() {
+			// 					if (this.nowCurreny == 0) {
+			// 						this.exCurreny = 0;
+			// 						this.exCurrenyList = this.Currency.filter((item, index) => {
+			// 							if (item != "EAKE") {
+			// 								return true;
+			// 							}
+			// 						})
+			// 					} else {
+			// 						this.exCurreny = 0;
+			// 						this.exCurrenyList = this.Currency.filter((item, index) => {
+			// 							if (item == "EAKE") {
+			// 								return true;
+			// 							}
+			// 						})
+			// 					}
+			// 				}
+			// 			}
+		})
+
+		function send(t) {
+			countdown(60, t, window.localStorage.getItem('userName'), function(data) {})
+		}
+	</script>
+</html>

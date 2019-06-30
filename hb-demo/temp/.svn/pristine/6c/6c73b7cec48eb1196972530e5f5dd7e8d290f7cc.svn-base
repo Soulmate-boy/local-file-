@@ -1,0 +1,135 @@
+
+.mui-bar-nav {
+	height: 1.94rem;
+	background: url("../../../image/ss%20(4).png")no-repeat;
+	background-size: 100% 100%;
+	padding-top:0.6rem;
+}
+
+header.mui-bar-nav .mui-title {
+	width: auto !important;
+	margin-right: 38px;
+	padding-left: 38px;
+	box-sizing: border-box;
+}
+
+.mui-bar-nav a,
+.mui-bar-nav h1 {
+	color: white;
+}
+
+.mui-bar-nav h1 {
+	line-height: 1.34rem;
+	font-size: 0.6rem;
+}
+
+.mui-bar-nav~.mui-content {
+	padding-top: 1.04rem;
+}
+
+body {
+	background: #fff;
+}
+p{
+	margin: 0;
+}
+
+
+.type-box {
+	box-sizing: border-box;
+	width: 100%;
+	overflow: hidden;
+}
+#box>div:nth-child(2){
+	margin-top: 1.93rem;
+}
+
+.date-time {
+	box-sizing: border-box;
+	width: 100%;
+	height: 1.42rem;
+	line-height: 1.42rem;
+	text-align: center;
+	color: #999999;
+	font-size: 0.36rem;
+	padding: 0 1.72rem;
+	position: relative;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	
+}
+
+.date-time p:first-child {
+	margin-right: 0.55rem;
+}
+
+.date-time:before {
+	content: "";
+	display: block;
+	width: 12%;
+	border-top: 0.03rem solid #CECECE;
+	position: absolute;
+	top: 50%;
+	left: 1.72rem;
+}
+
+.date-time:after {
+	content: "";
+	display: block;
+	width: 12%;
+	border-top: 0.03rem solid #CECECE;
+	position: absolute;
+	top: 50%;
+	right: 1.72rem;
+}
+
+.type-box .plate {
+	padding: 0 0.44rem;
+}
+
+.type-box .plate a.info {
+	display: block;
+	width: 100%;
+	height: 5.26rem;
+	margin-bottom: 0.6rem;
+	position: relative;
+	padding: 0.4rem;
+}
+
+.bg1 {
+	background: url("../../../image/g%20(3).png") no-repeat center/contain;
+}
+
+.bg2 {
+	background: url("../../../image/g%20(1).png") no-repeat center/contain;
+}
+
+.plate a.info p {
+	font-size: 0.6rem;
+	color: #fff !important;
+	line-height: 0.6rem;
+	letter-spacing: 0.1rem;
+}
+
+.plate a.info p:nth-child(2) {
+	text-indent: 2.3em;
+	margin-top: 0.28rem;
+	margin-bottom: 0.65rem;
+}
+
+.plate .info div {
+	/* border: 1px solid #fff; */
+	width: 6.04rem;
+	height: 0.74rem;
+	line-height: 0.74rem;
+	color: #fff;
+}
+
+.plate .info .foo1 {
+	margin-bottom: 0.25rem;
+}
+
+.plate .info .foo2 {
+	width: 6.85rem;
+}

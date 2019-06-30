@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>收款账单</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/Prepaid.css">
+		<style>
+			.mui-table-view {
+				margin-top: 0.75rem !important;
+			}
+
+			.mui-table-view-cell {
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				margin: 0.3rem 0;
+			}
+
+			.mui-table-view-cell>a {
+				margin-top: 0.1rem !important;
+			}
+
+			.mui-table-view-cell>a.mui-active {
+				background-color: transparent !important;
+			}
+
+			/* 去掉下划线 */
+			.mui-table-view-cell:after {
+				background-color: transparent;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after {
+				background-color: transparent;
+			}
+
+			.p1,
+			.p2 {
+				color: #fe0903 !important;
+			}
+
+			.mui-content .mui-table-view .mui-table-view-cell {
+				margin-top: 0;
+			}
+
+			.mui-table-view-cell {
+				box-shadow: none;
+				margin: 0;
+				border-bottom: 1px solid #cecece;
+			}
+
+			.mui-content .mui-table-view .mui-table-view-cell {
+				margin-top: 5px;
+			}
+
+			.mui-navigate-right:after,
+			.mui-push-left:after,
+			.mui-push-right:after {
+				top: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<!-- ../mine.html -->
+			<h1 class="mui-title">收款账单</h1>
+		</header>
+		<div id="box" class="mui-content">
+			<ul class="mui-table-view">
+				<p v-show="show_txt" style="display: none;">暂无收款信息</p>
+				<img v-if="show_img" src="../../image/timg%20(2).gif" style="width:20%;height:auto;margin:50% 0 0 50%;transform: translate(-50%,-50%);" alt="">
+				<li v-show="show_list" style="display: none;" class="mui-table-view-cell" v-for="(i,j) in list">
+					<a href="javascript:;" class="mui-navigate-right">
+						<div class=" tit">
+							<span class="t1">账单</span>
+							<div>
+								<span class="p1" v-text="i.payedCount"></span>
+								<span class="p2" v-text="i.coinName"></span>
+							</div>
+						</div>
+						<div class=" tit">
+							<span class="sp">收款成功</span>
+							<div>
+								<time class="time-1">{{i.payTime |time_1}}</time>
+								<time class="time-2">{{i.payTime |time_2}}</time>
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					list: [],
+					show_list: false,
+					show_txt: false,
+					show_img: true,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/pay/payRecord',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						_this.show_list = true;
+						_this.list = data.data.releaseLog;
+						if (_this.list.length == 0) {
+							_this.show_txt = true;
+						}
+						_this.show_img = false;
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			},
+			filters: {
+				time_1(val) {
+					return val.trim().split(/\s+/)[0];
+				},
+				time_2(val) {
+					return val.trim().split(/\s+/)[1];
+				}
+			}
+		})
+	</script>
+</html>

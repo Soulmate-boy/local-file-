@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>设置</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style>
+			header.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				padding-top:0.6rem;
+			}
+
+			header.mui-bar-nav a,
+			header.mui-bar-nav h1 {
+				color: white;
+			}
+
+			header.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+			.mui-bar-nav~.mui-content{
+				margin-top:1.34rem;
+				padding-top:0.15rem;
+			}
+			.mui-table-view-cell>a{
+				font-size: 0.44rem;
+				color:#323232;
+			}
+			
+			.mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after{
+				color:#3531cc;
+			}
+			
+			.mui-btn{
+				width:9.68rem;
+				height:1.29rem;
+				margin-left:calc((100% - 9.68rem)/2);
+				margin-top:12.45rem;
+				border-radius:0.4rem;
+				outline: none;
+				border: none;
+				color:white;
+				font-size: 0.44rem;
+				background:url("../../image/btn-long.png")no-repeat;
+				background-size:100% 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:;" class="mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<!-- ../mine.html -->
+			<h1 class="mui-title">设 置</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="javascript:;" onclick="logins('./Identity.html','./Identity.html')" class="mui-navigate-right">实名认证</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="javascript:;" onclick="logins('./Settings.html','./Settings.html')" class="mui-navigate-right">安全设置</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="javascript:;" onclick="logins('./About.html','./About.html')" class="mui-navigate-right">关于我们</a>
+				</li>
+			</ul>
+		</div>
+		<button onclick="exit()" type="button" class="mui-btn">退出登录</button>
+
+
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		// 退出
+		function exit() {
+			mui.confirm('确定退出登录？', '提示', ['确定', '取消'], function(e) {
+				if (e.index == 0) {
+					window.localStorage.removeItem('userId');
+					window.localStorage.removeItem('userName');
+					window.localStorage.removeItem('privateKey');
+					window.location.href = './login.html';
+				}
+			}, 'div')
+		}
+	</script>
+</html>

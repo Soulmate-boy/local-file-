@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>每日收益</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../../css/css/mine/dailyEarnings.css">
+	</head>
+	<body>
+
+		<div class="contain" id="app" v-cloak>
+			<div class="main">
+				<header class="mui-bar mui-bar-nav">
+					<a href="./accumulate.html" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+					<h1 class="mui-title">每日收益</h1>
+				</header>
+				<div class="head">
+					<p class="rate"><span v-text="nums"></span><span>BTC</span></p>
+					<div class="hr"></div>
+					<p class="date-time"></p>
+				</div>
+			</div>
+
+			<div class="sign">每日收益明细（个）</div>
+			<div>
+				<div class="product">产品</div>
+				<div class="ul-list">
+					<div class="ul-item" v-for="(i,j) in list.releaseLog">
+						<p v-text="i.coinName + '指数基金'"></p>
+						<div v-text="'+' +i.total"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		getDate((d)=>{
+			$(".date-time").html(d)
+		})
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					list: {},
+					nums: 0,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/releaseLog',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						_this.list = data.data;
+						console.log(_this.list)
+						if (_this.list.releaseLog != null || _this.list.releaseLog.length) {
+							_this.list.releaseLog.forEach((i, j) => {
+								_this.nums += Number(i.total);
+							})
+						}else{
+							_this.nums = 0
+						}
+					},
+					error: function(error) {
+						console.log(error);
+							window.location.href = '../404.html';
+					}
+				});
+			}
+		})
+	</script>
+</html>

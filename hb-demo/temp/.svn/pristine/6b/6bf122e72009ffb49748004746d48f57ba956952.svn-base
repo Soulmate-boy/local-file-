@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人收款</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-bar-nav {
+				background:none !important;
+			}
+			html{
+				background:url('../../image/n-img%20(19).jpg')no-repeat;
+				background-size:100%;
+			}
+			body{
+				background-color:rgba(0,0,0,0);
+			}
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.44rem;
+				font-size: 0.6rem;
+			}
+
+
+
+			.type-box {
+				margin-top: 1.33rem;
+				box-sizing: border-box;
+				width: 100%;
+				overflow: hidden;
+				padding: 1.24rem 0.96rem 0;
+			}
+
+			.type-box>a>img {
+				width: 100%;
+				height: 3.74rem;
+				margin-bottom: 0.36rem;
+			}
+
+	
+			#main{
+				width: 10rem;
+				background: #fff;
+				overflow: hidden;
+				margin: 20% 0 0 50%;
+				transform: translateX(-50%);
+				border-radius: 0.4rem;
+			}
+			#qrcode {
+				display: block;
+				width: 10rem;
+				height: 10rem;
+				padding:0.7rem;
+				background-color:#fff;
+				border-radius:0.4rem;
+			}
+			
+
+			#qrcode>canvas,
+			#qrcode>img {
+				width: 100%;
+				height: 100%;
+			}
+
+			.currency {
+				width: 9.2rem;
+				height: 1.44rem;
+				display: flex;
+				direction: -webkit-flex;
+				justify-content: flex-start;
+				align-items: center;
+				border: 1px solid #CECECE;
+				margin: 10% 0 0 50%;
+				transform: translateX(-50%);
+				padding-left: 0.2rem;
+				background-color:#fff;
+				border-radius: 0.4rem;
+			}
+
+			.currency>span {
+				font-size: 0.45rem;
+				color: #999;
+			}
+
+			.currency>select {
+				width: 7rem;
+				font-size: 0.4rem;
+				background-color: white;
+				box-sizing: border-box;
+				padding: 0.04rem 20px 0;
+				appearance: none;
+				-webkit-appearance: none;
+				color: #666;
+				font-size: 0.45rem;
+				border-radius:0 0.4rem 0.4rem 0;
+			}
+
+			.changeMoney {
+				width: 9.2rem;
+				height: 1.44rem;
+				display: flex;
+				direction: -webkit-flex;
+				justify-content: center;
+				align-items: center;
+				border: 1px solid #CECECE;
+				margin: 5% 0 0 50%;
+				transform: translateX(-50%);
+				padding-left: 0.2rem;
+				background-color:#fff;
+				border-radius: 0.4rem;
+			}
+
+			.changeMoney>label {
+				font-size: 0.45rem;
+				color: #999;
+			}
+
+			.changeMoney>input {
+				width: 7rem;
+				margin: 0;
+				border: none;
+				outline: none;
+				color: #666;
+				font-size: 0.45rem;
+				border-radius:0 0.4rem 0.4rem 0;
+			}
+
+			.confirm {
+				margin-top: 5%;
+				font-size: 0.46rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url(../../image/btn-long.png) no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-bottom: 0.8rem;
+				margin-left: 50%;
+				transform: translateX(-50%);
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">个人收款</h1>
+			</header>
+
+
+			<div id="main">
+				<!-- 二维码 -->
+				<div id="qrcode"></div>
+				<div class="currency">
+					<span>更换币种:</span>
+					<select name="prick" v-model="myVal">
+						<option value="EAKE">EAKE</option>
+						<!-- <option value="ETH">ETH</option>
+						<option value="USDT">USDT</option>
+						<option value="BTC">BTC</option> -->
+					</select>
+
+				</div>
+				<div class="changeMoney">
+					<label>输入金额:</label>
+					<input type="number" placeholder="请输入收款金额" v-model='money' />
+				</div>
+				<div @click="confirmBtn" class="confirm">确 认</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/qrcode.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					myVal: "EAKE",
+					money: '',
+					// 换成服务器的环境
+					url: '../mine/saoTopup.html',
+					qrcodeObj: null //二维码
+				}
+			},
+			mounted() {
+				// 二维码
+				this.qrcodeObj = new QRCode('qrcode', {
+					text: '',
+					colorDark: '#000000', //前景色
+					colorLight: '#ffffff' //背景色
+				});
+				var userId = window.localStorage.getItem("userId");
+				var currency = this.myVal;
+				// 初始化渲染
+				this.qr(userId, currency, this.money);
+			},
+			methods: {
+				// 确认更新
+				confirmBtn() {
+					var userId = window.localStorage.getItem("userId");
+					var currency = this.myVal;
+					this.qr(userId, currency, this.money);
+				},
+				qr(userId, currency, money) {
+					// 二维码信息
+					if (money == '' || money == 0) {
+						mui.toast('请输入金额！');
+						return false;
+					}
+					this.qrcodeObj.makeCode(this.url + '?userId=' + userId + '&currency=' + currency + '&money=' + money +'&userName='+ window.localStorage.getItem('userName'))
+				}
+			}
+
+		})
+	</script>
+</html>

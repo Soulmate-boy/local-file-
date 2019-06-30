@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../css/clearCss.css">
+		<script src="../js/rem.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/css/CommonStyle.css">
+		<!-- 自定义样式 -->
+		<style type="text/css">
+			body,html{
+				background: #fff;
+			}
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../image/geren%20(1).png") no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			/* 网络故障 */
+			.Network {
+				width: 100%;
+				height: 100%;
+			}
+
+			.Network>img {
+				width: 100%;
+				margin-top: 5rem;
+				margin-bottom: 2rem;
+			}
+
+			.Network>p {
+				color: #333333;
+				font-size: 0.34rem;
+				text-align: center;
+			}
+			.refresh>a{
+				display: block;
+				font-size: 0.46rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 2rem;
+			}
+		</style>
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:history.go(-1);" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="Network">
+			<img src="../image/geren%20(12).png" alt="">
+			<p style="font-size: 0.46rem;font-weight: bold;">亲，页面走丢了~~</p>
+			<p style="font-size: 0.46rem;">网络出问题了~点击重试</p>
+			<div class="refresh mui-action-back"><a href="javascript:history.go(-1);">返 回 刷 新</a></div>
+		</div>
+
+	</body>
+
+	<!-- <script src="../js/api.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/translate.js"></script>
+	<script src="../js/language.js"></script>
+	<script src="../js/logding.js"></script> -->
+
+</html>

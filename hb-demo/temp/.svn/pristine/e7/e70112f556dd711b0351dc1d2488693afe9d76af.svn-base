@@ -1,0 +1,128 @@
+.head {
+	box-sizing: border-box;
+	width: 100%;
+	background: url("../../../image/img/n-img%20(17).jpg") no-repeat;
+	background-size: 100% 3.15rem;
+	position: fixed;
+	top: 0;
+}
+
+
+.mui-bar-nav {
+	height: 1.93rem;
+	box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+	padding-top: 0.6rem;
+	background: transparent;
+	box-shadow: none;
+	z-index: 1;
+}
+
+.mui-bar-nav a,
+.mui-bar-nav h1 {
+	color: white;
+}
+
+.mui-bar-nav h1 {
+	line-height: 1.34rem;
+	font-size: 0.6rem;
+}
+.head .num {
+	height: 1.22rem;
+	line-height: 1.22rem;
+	width: 100%;
+	padding-left: 1.36rem;
+	margin-top: 1.93rem;
+}
+.head .num>span {
+	font-size: 0.5rem;
+	color: #fff;
+	margin-right: 1.35rem;
+}
+
+.tabbar {
+	box-sizing: border-box;
+	width: 100%;
+	height: 1.06rem;
+	line-height: 1.06rem;
+	background: #fff;
+	font-size: 0.46rem;
+	padding: 0 0.86rem;
+	position: fixed;
+	top: 3.15rem;
+	left: 0;
+	box-shadow: 0 .01rem 0.2rem rgba(0,0,0,0.3);
+	z-index: 20;
+}
+
+p {
+	margin: 0;
+}
+
+
+.inform-item>div {
+	width: 23%;
+}
+
+#number {
+	/* border: 1px solid red; */
+	margin-top: 4.61rem;
+	margin-bottom: 1.65rem;
+	width: 100%;
+	background: #fff;
+	padding: 0.2rem 0;
+}
+
+.inform-item {
+	width: 11.53rem;
+	height: 1.43rem;
+	background: #fff;
+	box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+	border-radius: 0.4rem;
+	margin: 0.3rem auto 0;
+	padding: 0 0.47rem;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.5rem;
+	overflow: hidden;
+}
+
+.inform-item>img {
+	width: 0.91rem;
+	height: 0.91rem;
+	vertical-align: bottom;
+	border-radius: 50%;
+}
+
+.rise .c-money {
+	/* color: #00C96E; */
+}
+
+.rise .arrow-t {
+	/* color: #fff;
+	background:#00C96E; */
+	/* width: 1.92rem; */
+	height: 0.6rem;
+	line-height: 0.6rem;
+	text-align: center;
+	border-radius: 0.2rem;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.rise .arrow-t>img {
+	width: 0.48rem;
+	height: 0.6rem;
+	vertical-align: bottom;
+}
+
+/* .decline .c-money {
+	color: #D74E3E;
+}
+ */
+.arrow-t>span {
+	color: #00C96E;
+}

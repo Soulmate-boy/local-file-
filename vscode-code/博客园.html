@@ -1,0 +1,72 @@
+<html lang="en">
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="origin">
+    <title>Soul_Keyboard_man - 博客园</title>
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="w-notice">
+        <marquee behavior="scroll" scrollamount="4" direction="left" onmouseover=this.stop() onmouseout=this.start()>
+            公告超出滚动,公告超出滚动,公告超出滚动,公告超出滚动.
+        </marquee>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    <button id="btn">button</button>
+    <div id="w-audio">
+        <audio id="vi" controls autoplay preload muted loop
+            src="http://img.tukuppt.com/video_show/2402760/00/01/73/5b495ddab7660.mp4"></audio>
+    </div>
+    <script>
+        window.onload = function () {
+            var v = document.getElementById('vi');
+            var b = document.getElementById('btn');
+            b.onclick = function () {
+                console.log(v)
+                console.log(v.controls);//	设置或返回视频是否应该显示控件（比如播放/暂停等）。
+                console.log(v.currentSrc);//返回当前视频的 URL。
+                console.log(v.currentTime);//设置或返回视频中的当前播放位置（以秒计）。
+                console.log(v.defaultMuted);//	设置或返回视频默认是否静音。
+                console.log(v.muted);//设置或返回是否关闭声音。
+                console.log(v.paused);//	设置或返回视频是否暂停。
+                console.log(v.audioTracks);
+
+                v.muted = false;
+                v.play();
+            };
+            setTimeout(function(){
+                console.log("play")
+                v.muted = false;
+                v.play();
+            },1);
+
+        }
+    </script>
+
+
+
+</body>
+
+</html>

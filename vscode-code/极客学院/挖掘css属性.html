@@ -1,0 +1,55 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用代码挖掘css属性</title>
+    <style>
+        tbody tr td:nth-child(1),
+        thead tr td:nth-child(1) {
+            width: 50px;
+            text-align: center;
+        }
+
+        tbody tr td,
+        thead tr td {
+            border-bottom: 1px solid #cecece;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>个数</td>
+                <td>属性</td>
+            </tr>
+        </thead>
+        <tbody class="box">
+        </tbody>
+    </table>
+
+    <script type="text/ecmascript-6">
+        var obj_key = Object.keys(document.body.style).filter(e => !e.match(/^webkit/));
+        obj_key.splice(',').forEach((t, i) => {
+            // console.log('第' + (i + 1) + '个CSS属性：' + t);
+            app_data(i + 1, t);
+        });
+        function app_data(i, t) {
+            var tr = document.createElement("tr");
+            var td = document.createElement("td");
+            tr.append(td);
+            var text = document.createTextNode(i);
+            td.append(text)
+            var td = document.createElement("td");
+            tr.append(td);
+            var text = document.createTextNode(t);
+            td.append(text)
+            document.getElementsByClassName('box')[0].append(tr)
+        }
+    </script>
+</body>
+
+</html>

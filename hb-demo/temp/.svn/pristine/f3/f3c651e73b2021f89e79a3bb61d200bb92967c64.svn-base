@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>提现</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/withdrawal.css">
+		<style type="text/css">
+			.row1 .mui-input-row>span {
+				line-height: 1.44rem;
+			}
+
+			.row2 input[name='shouxufei'] {
+				font-size: 0.46rem !important;
+			}
+
+			ol>li {
+				list-style: decimal;
+				margin-left: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<!-- ../mine.html -->
+			<h1 class="mui-title">提现</h1>
+			<a onclick="logins('./record.html','./record.html')" class="mui-pull-right">提现记录</a>
+		</header>
+		<div class="mui-content">
+			<form class="row1 mui-input-group">
+				<div class="mui-input-row">
+					<span class="mui-icon mui-icon-forward"></span>
+					<label>选择币种</label>
+					<select class="se" name="currency" style="font-size: 0.46rem;">
+						<!-- <option value="ETH">ETH</option>
+						<option value="USDT">USDT</option>
+						<option value="BTC">BTC</option> -->
+						<option value="EAKE">EAKE</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<span class="mui-icon mui-icon-forward"></span>
+					<label>提现地址</label>
+					<input id="address" style="font-size: 0.46rem;" type="text" placeholder="请输入提现地址">
+				</div>
+				<div class="mui-input-row">
+					<span class="mui-icon mui-icon-forward"></span>
+					<label>提款数量</label>
+					<input id="nums" style="font-size: 0.46rem;" class="pl" type="text" placeholder="最低提现单位100">
+				</div>
+			</form>
+			<p style="height:1.44rem;line-height: 1.44rem;margin-left:0.41rem;margin-bottom:0;font-size: 0.36rem;color:#666">可提额度<span
+				 style="color:#3435c9;margin-left: 0.5rem;" id="withdrawalCount">0</span></p>
+			<form class="row2 mui-input-group">
+				<div class="mui-input-row">
+					<label>手续费</label>
+					<input id="network" name="shouxufei" type="text" placeholder="0" value="20%" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<button type="button" class="mui-btn mui-btn-success mui-btn-outlined" onclick="send(this)">发送验证码</button>
+					<label>短信验证码</label>
+					<input id="SMS" style="font-size: 0.46rem;width: 28%;" type="password" placeholder="请输入验证码">
+				</div>
+				<div class="mui-input-row">
+					<label>资金密码</label>
+					<input id="payPassword" style="font-size: 0.46rem;" type="password" placeholder="请输入资金密码">
+				</div>
+			</form>
+			<ul class="msg">
+				<li>提现须知:
+					<ol>
+						<li>释放出来的币，够100枚可以提币。</li>
+						<li>提币扣除20%手续费。</li>
+					</ol>
+				</li>
+			</ul>
+			<!-- <button type="button" class=" btns mui-btn mui-btn-blue">提现</button> -->
+			<div class="go-submit"><a onclick="submit()" href="javascript:;">提 现</a></div>
+
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		function send(t) {
+			countdown(60, t, window.localStorage.getItem('userName'), function(data) {})
+		}
+		$.ajax({
+			type: "POST",
+			url: api + '/user/wallet',
+			data: {
+				userId: window.localStorage.getItem('userId')
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				if (data.code == 0) {
+					mui.toast('刷新失败~');
+					return false;
+				}
+				$("#withdrawalCount").html(data.data.userWallet.eakeAvailableCount);
+
+			},
+			error: function(error) {
+				console.log(error);
+				mui.toast('网络超时');
+			}
+		});
+		// .
+		function submit() {
+			var $currency = $("[name='currency'] option:selected").val(), //提现币种
+				$address = $("#address").val(), //提现地址
+				$nums = $("#nums").val(), //数量
+				$network = $("#network").val(), //网络手续费
+				$SMS = $("#SMS").val(), //短信
+				$payPassword = $("#payPassword").val(); //资金密码
+			if ($currency == '') {
+				mui.toast('请选择币种')
+				return false
+			} else if ($address == '') {
+				mui.toast('请填写输入地址')
+				return false
+			} else if (!isNaN($nums) && $nums < 100) {
+				mui.toast('请输入正确提现数量')
+				return false
+			} else if ($network == '') {
+				mui.toast('请输入网络手续费')
+				return false
+			} else if ($SMS == '') {
+				mui.toast('请输入短信验证码')
+				return false
+			} else if ($payPassword == '') {
+				mui.toast('请输入资金密码')
+				return false
+			}
+			$.ajax({
+				type: "POST",
+				url: api + '/user/withdraw',
+				data: {
+					userId: window.localStorage.getItem('userId'),
+					address: $address, //地址
+					count: $nums, //数量
+					payPassword: $payPassword, //资金密码
+					withdrawFee: $network, //网络手续费
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data)
+					if (data.code == 0) {
+						mui.toast(data.msg);
+						return false;
+					}
+
+					// window.location.href = './showDetails.html';
+				},
+				error: function(error) {
+					console.log(error);
+					window.location.href = '../404.html';
+				}
+			});
+
+
+		}
+	</script>
+</html>

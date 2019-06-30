@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/login.css">
+		<style type="text/css">
+			header {
+				width: 100%;
+				height: 0.6rem;
+				background-color: rgba(0, 0, 0, 0.3);
+			}
+
+			/* 翻译 */
+			#en_zn {
+				width: 1.15rem;
+				height: 0.77rem;
+				position: fixed;
+				top: 0.95rem;
+				right: 0.44rem;
+			}
+
+			#en_zn>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<header></header>
+		<img id="imgLogin" src="../../image/timg%20(2).gif" style="width:50px;height:50px;margin-top:10px;display: none;position: fixed;top:0.3rem;left:1px;"
+		 alt="">
+		<div class="mui-content">
+			<div id="en_zn" onclick="pack(event);">
+				<img src="../../image/z-e-f%20(3).png" alt="">
+			</div>
+			<img src="../../image/img/15d0b633ad3af18b80fca985037ad3d.png" alt="">
+			<p style="font-size: 0.5rem;color:#5638f8;text-align: center;margin-bottom: 0.7rem;"></p>
+			<form class="mui-input-group">
+				<div class="mui-input-row" style="margin-bottom:0rem;">
+					<label>用户名</label>
+					<input id="phone" type="text" class="mui-input-clear" placeholder="">
+				</div>
+				<div class="mui-input-row" style="margin-top:0.59rem;">
+					<label>密码</label>
+					<input id="validation" type="password" class="mui-input-password" placeholder="">
+					<!-- 请输入密码(6-16字母+数字组合) -->
+				</div>
+			</form>
+			<!-- <button onclick="login()" type="button" class="mui-btn mui-btn-blue">登 &nbsp;&nbsp;&nbsp;&nbsp;录</button> -->
+			<div onclick="login()" class="msglogin">登 录</div>
+			<div class="d" style="margin-top:0.8rem;">
+				<span><a class="active" href="./setPassword.html">注册账号</a></span>
+				<span><a href="./Retrieve.html">忘记密码</a></span>
+			</div>
+			<p class="duan"><a href="./msglogin.html">短信登录</a></p>
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<!-- pubioc.js -->
+	<script src="../../js/js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		function pack() {
+			translate();
+		}
+		var value = localStorage.getItem("language");
+		if (value == null) {
+			translate();
+		}
+		if (value === "1") {
+			$("#en_zn img").attr('src', '../../image/z-e-f%20(3).png'); //简体
+		} else {
+			//  if(value === '1')
+			$("#en_zn img").attr('src', '../../image/z-e-f%20(1).png'); //英文
+		}
+		// 		else{
+		// 			$("#lange img").attr('src', '../../image/z-e-f%20(2).png');//繁体
+		// 		}
+
+
+		function login() {
+			$("#imgLogin").show();
+			var phone = $('#phone').val(),
+				validation = $('#validation').val();
+			if (!(/^1[34578]\d{9}$/.test('15138733007'))) {
+				mui.toast('手机号有误')
+				return false;
+			} else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/.test('q123456'))) {
+				mui.toast('密码有误')
+				return false;
+			} else {
+				
+				$.ajax({
+					type: "POST",
+					url: api + '/user/login',
+					data: {
+						userName: phone,
+						password: validation
+					},
+					dataType: "json",
+					success: function(data) {
+						$("#imgLogin").hide();
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+						window.localStorage.setItem('userId', data.data.id);
+						window.localStorage.setItem('userName', data.data.userName);
+						window.localStorage.setItem('privateKey', data.data.privateKey);
+						window.location.href = '../../index.html?userName=' + data.data.userName;
+					},
+					error: function(error) {
+						console.log(error);
+						$("#imgLogin").hide();
+						mui.toast('登录超时,重新登录~')
+					}
+				});
+			}
+		};
+
+		// 返回
+// 		var count = 0;
+// 		window.history.pushState(null, null, "#");
+// 		window.addEventListener("popstate", function(e) {
+// 			window.history.pushState(null, null, "#");
+// 		})
+	</script>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>充值成功</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/mine/showDetails.css"/>
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="./Prepaid.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">充值成功</h1>
+			</header>
+
+
+			<!-- 成功 -->
+			<div class="type-box success" v-if="isShow">
+				<div class="info">
+					<img class="bg" src="../../image/geren%20(2).png" alt="">
+					<img class="type-icon" src="../../image/geren%20(3).png" alt="">
+					<p>充值成功</p>
+					<p>-0.04453BTC</p>
+				</div>
+				<div class="info-detail">
+					<p>收货地址：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFH</p>
+					<p>交易接口：</p>
+					<p class="retract">3KTHUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSIUY53UHYUHUU96YTYDVFDHBNYEFDIUFHSI</p>
+					<p>交易时间：</p>
+					<p class="retract">
+						<span>2019-3-25</span><span>17:36:52</span>
+					</p>
+				</div>
+			</div>
+			
+
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#box",
+			data(){
+				return{
+					isShow:true
+				}
+			}
+		})
+	</script>
+</html>

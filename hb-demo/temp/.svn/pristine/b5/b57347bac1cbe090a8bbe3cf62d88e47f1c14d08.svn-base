@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>邀请好友</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+
+			.mui-content {
+				width: 100%;
+				height: 100%;
+				padding-top: 1.34rem;
+				background: url("../../image/geren%20(10).png")no-repeat;
+				background-size: 100% 100%;
+			}
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.44rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav .mui-pull-right {
+				line-height: 1.44rem;
+				font-size: 0.46rem;
+			}
+
+			.mui-content>p {
+				padding: 0 0.8rem;
+				margin-top: 1rem;
+				color: white;
+				font-size: 0.44rem;
+				text-align: justify !important;
+			}
+
+			#qrcode {
+				width: 5.4rem;
+				height: 5.4rem;
+				margin: 6.5rem auto 0;
+				/* border: 0.2rem solid #fff; */
+				background: #fff;
+				overflow: hidden;
+			}
+
+			#qrcode>canvas {
+				width: 5rem;
+				height: 5rem;
+				margin: 0.2rem 0 0 0.2rem;
+			}
+
+			#qrcode>img {
+				width: 5rem;
+				height: 5rem;
+				margin: 0.2rem 0 0 0.2rem;
+			}
+
+			.mui-btn {
+				width: 9.72rem;
+				/* height: 1.33remn; */
+				line-height: 0.89rem;
+				border: none;
+				border-radius: 0.4rem;
+				margin: 15% 0 0 calc((100% - 9.72rem)/2);
+				outline: none;
+				color: white;
+				background: url("../../image/btn-long.png")no-repeat;
+				background-size: 100% 100%;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+		</style>
+
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javscript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<!-- ../mine.html -->
+			<h1 class="mui-title">邀请好友</h1>
+			<a href="javscript:;" onclick="logins('./Invited.html','./Invited.html')"  class="mui-pull-right">邀请记录</a>
+		</header>
+		<div class="mui-content" id="app">
+			<p>
+				邀请好友
+				<br>
+				邀请好友注册加入EAKE TOKEN全球首个DAPP智能支付合约平台，您即可获得一定比例的好友智能支付收益，最高可还百分之百。
+			</p>
+			<!-- 二维码 -->
+			<div id="qrcode"></div>
+			<button @click="btn()" type="button" class="mui-btn">立即邀请好友</button>
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/qrcode.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#app",
+			mounted() {
+				this.$nextTick(function() {
+					$(function() {
+						var qrcode = document.getElementById("qrcode")
+						var qrcodeObj = new QRCode('qrcode', {
+							text: '',
+							colorDark: '#000000', //前景色
+							colorLight: '#ffffff' //背景色
+						});
+						// TODO --二维码信息
+						qrcodeObj.makeCode(api + '/app/reg?userName=' + window.localStorage.getItem("userName"));
+					})
+				})
+			},
+			methods: {
+				btn() {
+					var _this = this;
+					var msg = {
+						content: "sharecontent.value"
+					};
+					if ('iOS' == plus.os.name) { //iOS平台添加链接地址
+						msg.href = api + '/app/reg?userName=' + window.localStorage.getItem('userName');
+					}
+					// outLine(JSON.stringify(msg));
+					plus.share.sendWithSystem ? plus.share.sendWithSystem({
+						content: '点击立即注册，欢迎加入我们！',
+						href: api + '/app/reg?userName=' + window.localStorage.getItem('userName')
+					}, function() {
+						console.log('分享成功');
+					}, function(e) {
+						console.log('分享失败：' + JSON.stringify(e));
+						mui.alert("无法调用系统分享功能", "提示！", "确定", function() {}, 'div');
+					}) : _this.shareSystemNativeJS();
+
+
+				},
+				shareSystemNativeJS() {
+					if (plus.os.name !== 'Android') {
+						plus.nativeUI.alert('此平台暂不支持系统分享功能!');
+						return;
+					}
+					var intent = new Intent(Intent.ACTION_SEND);
+					intent.setType('text/plain');
+					intent.putExtra(Intent.EXTRA_SUBJECT, 'HelloH5');
+					intent.putExtra(Intent.EXTRA_TEXT, "sharecontent.value");
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					main.startActivity(Intent.createChooser(intent, '系统分享Hello!'));
+				},
+
+			},
+		})
+	</script>
+</html>

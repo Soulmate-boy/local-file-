@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>公告</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/ss%20(4).png")no-repeat;
+				background-size: 100% 100%;
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav~.mui-content {
+				padding-top: 1.04rem;
+			}
+
+			body {
+				background: #fff;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			article {
+				margin-top: 1.33rem;
+				padding: 1.42rem 0.48rem 0;
+				width: 100%;
+				color: #333333;
+			}
+
+			.head-title {
+				text-align: center;
+			}
+
+			.head-title h1 {
+				font-size: 0.6rem;
+				line-height: 0.8rem;
+				color: #333333;
+				font-weight: normal;
+				margin: 0;
+			}
+
+			.head-title>p {
+				font-size: 0.36rem;
+				color: #333333;
+				line-height: 0.5rem;
+			}
+
+			.head-title .art-date {
+				margin-top: 0.36rem;
+			}
+
+			.contain {
+				margin-top: 0.36rem;
+				/* border: 1px solid red; */
+			}
+
+			.contain p {
+				font-size: 0.46rem;
+				color: #333333;
+				line-height: 0.75rem;
+			}
+
+			.contain div {
+				padding: 0 0.9rem;
+			}
+
+			#take {
+				line-height: 2rem;
+			}
+
+			.note {
+				text-align: right !important;
+				margin-top: 1rem;
+			}
+
+			.note>p {
+				text-align: right !important;
+				font-size: 0.46rem;
+				color: #333333;
+				line-height: 0.75rem;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="box">
+			<header class="mui-bar mui-bar-nav">
+				<a href="./notice.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">公告详情</h1>
+			</header>
+
+			<article v-for="(i,j) in contentList" v-if="i.id == detailId">
+				<div class="head-title">
+					<!-- <h1>关于一掌金平台严厉打击扰乱市场打击扰乱市场</h1>
+					<p class="art-date">2019年03月25日</p>
+					<p class="art-time">16:35:24</p> -->
+					<h1 v-text="i.title"></h1>
+					<div class="art-date" v-text="i.createTime"></div>
+				</div>
+				<div class="contain" v-html="i.content">
+					<!-- <p id="respect">尊敬的一掌金用户：</p> -->
+					<!-- <div>
+						<p>1、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能。</p>
+						<p>2、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能</p>
+						<p>3、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能</p>
+						<p id="take">特此通知</p>
+					</div> -->
+				</div>
+
+				<!-- <div class="note">
+					<p>一掌金科技</p>
+					<p>2019年03月25日</p>
+				</div> -->
+			</article>
+
+
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script src="../../js/public.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					contentList: [],
+					detailId: ""
+				}
+			},
+			mounted() {
+				var _this = this;
+				CutString(window.location.href, function(d) {
+					_this.detailId = d.detailId;
+				})
+				$.ajax({
+					type: "POST",
+					url: api + "/notices",
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast("请求超时..");
+							return false;
+						}
+						_this.contentList = data.data;
+						console.log(_this.contentList)
+					},
+					error: function(err) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				})
+			}
+		})
+	</script>
+</html>

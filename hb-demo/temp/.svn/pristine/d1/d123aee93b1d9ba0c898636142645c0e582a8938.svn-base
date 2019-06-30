@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>注册账号</title>
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<link rel="stylesheet" type="text/css" href="../../css/css/mine/setPassword.css" />
+		<style type="text/css">
+			input::-webkit-input-placeholder,
+			textarea::-webkit-input-placeholder {
+				color: #cecece;
+				font-size: 0.36rem;
+
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="./login.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册账号</h1>
+		</header>
+
+		<div class="contain">
+			<div class="phone">
+				<p>手机号</p>
+				<input style="border:1px solid #d8d8e2;" id="phone" type="text" placeholder="">
+				<!-- 请输入手机号 -->
+				<div style="border:1px solid #d8d8e2;">
+					<input id="code" type="text" placeholder=""><label onclick="send(this)">发送验证码</label>
+					<!-- 请填写验证码 -->
+				</div>
+			</div>
+			<div class="psw">
+				<p>密码</p>
+				<input style="border:1px solid #d8d8e2;" id="validation" type="text" placeholder="">
+				<!-- 设置登录密码(6-16字母+数字组合) -->
+				<input style="border:1px solid #d8d8e2;" id="validations" type="text" placeholder="">
+				<!-- 确认登录密码 -->
+			</div>
+			<div class="psw">
+				<p>交易码</p>
+				<input style="border:1px solid #d8d8e2;" id="Trade" type="text" placeholder="">
+				<!-- 设置交易码(6-8字母+数字组合) -->
+				<input style="border:1px solid #d8d8e2;" id="Trades" type="text" placeholder="">
+				<!-- 确认交易码 -->
+			</div>
+			<div class="psw">
+				<p>推荐码</p>
+				<input style="border:1px solid #d8d8e2;" id="recommended" type="text" placeholder="">
+				<!-- 推荐码(必填) -->
+			</div>
+			<div class="next-step" onclick="login()">下 一 步</div>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init()
+
+		function send(t) {
+			if (!(/^1[34578]\d{9}$/.test($('#phone').val()))) {
+				mui.toast('手机号有误')
+				return false;
+			}
+			countdown(60, t, $('#phone').val(), function(d) {
+				// console.log(d)
+			});
+		}
+
+		function login() {
+			var phone = $('#phone').val(),
+				code = $('#code').val(),
+				validation = $('#validation').val(),
+				validations = $('#validations').val(),
+				Trade = $('#Trade').val(),
+				Trades = $('#Trades').val(),
+				recommended = $('#recommended').val();
+			if (!(/^1[34578]\d{9}$/.test(phone))) {
+				mui.toast('手机号有误')
+				return false;
+			} else if (code = '') {
+				mui.toast('请填写验证码')
+				return false;
+			} else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/.test(validation))) {
+				mui.toast('登录密码不符合规范')
+				return false;
+			} else if (validation != validations) {
+				mui.toast('两次登录密码不相同')
+				return false;
+			} else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,8}$/.test(Trade))) {
+				mui.toast('交易密码不符合规范')
+				return false;
+			} else if (Trade != Trades) {
+				mui.toast('两次交易密码不相同')
+				return false;
+			} else if (recommended == '' || recommended == null) {
+				mui.toast('请填写推荐码')
+				return false;
+			} else {
+				// 判断注册用户是否重复,验证码是否正确,推荐码是否有效
+				$.ajax({
+					type: "POST",
+					url: api + '/user/reg',
+					data: {
+						userName: phone,
+						smsCode: code, //短信验证
+						password: validations, //登录密码
+						payPassword: Trades, //交易密码
+						inviter: recommended, //推荐码
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast(data.msg);
+							return false;
+						}
+// 						window.localStorage.getItem('userId', data.data.id);
+// 						window.location.href = './mnemonicWord.html?' + data.data.keyword; // 1234567  FNrM,xhbJ,pspq,RWsG,
+					},
+					error: function(error) {
+						console.log(error);
+					// window.location.href = '../404.html';
+					}
+				});
+			}
+		}
+	</script>
+</html>

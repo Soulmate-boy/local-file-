@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>身份认证</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style>
+			header.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				padding-top:0.6rem;
+			}
+
+			header.mui-bar-nav a,
+			header.mui-bar-nav h1 {
+				color: white;
+			}
+
+			header.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav~.mui-content {
+				margin-top: 1.34rem;
+				padding-top:0.6rem;
+			}
+			.mui-input-row label{
+				color:#333;
+				font-size: 0.46rem;
+			}
+			.mui-input-row label~input{
+				color:#999;
+				font-size: 0.36rem;
+			}
+			
+			.mui-btn{
+				border: none;
+				width:9.68rem;
+				height:1.29rem;
+				margin-left:calc((100% - 9.68rem)/2);
+				margin-top:12.45rem;
+				border-radius:0.4rem;
+				background:url("../../image/btn-long.png")no-repeat;
+				background-size:100% 100%;
+				color:white;
+				font-size: 0.44rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box" v-cloak>
+
+
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">身份认证</h1>
+			</header>
+			<div class="mui-content">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" v-model="txt"  placeholder="请输入姓名">
+					</div>
+					<div class="mui-input-row">
+						<label>身份证号</label>
+						<input type="text" v-model="id"  placeholder="请输入身份证账号">
+					</div>
+					<!-- <div class="mui-input-row">
+						<a href="javascript:;" style="display: block;width:100%;height:100%;">
+							theLogin('./face.html',function(){})
+							<label>人脸识别</label>
+							<span class="mui-icon mui-icon-arrowright" style="height:100%;line-height: 40px;float:right;margin-right:10px;"></span>
+						</a>
+					</div> -->
+				</form>
+			</div>
+			<button type="button" class="mui-btn" id="save"  @click="couple">保 存</button>
+
+
+
+		</div>
+
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+		const vm = new Vue({
+			el: "#box",
+			data() {
+				return {
+					txt: '',
+					id: '',
+				}
+			},
+			mounted(){
+				if(window.localStorage.getItem('realName') != null || window.localStorage.getItem('realName') != ''){
+					this.txt = window.localStorage.getItem('realName');
+				};
+				if(window.localStorage.getItem('cardNo') != null || window.localStorage.getItem('cardNo') != ''){
+					this.id = window.localStorage.getItem('cardNo');
+				}
+			},
+			methods: {
+				couple() {
+					var _this = this;
+					if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(_this.txt))) {
+						mui.toast('请填写真实姓名');
+						return false;
+					} else if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(_this.id))) {
+						mui.toast('身份证号不符合规则')
+						return false;
+					}
+					$.ajax({
+						type: "POST",
+						url: api + '/user/realnameAuth',
+						data: {
+							userId: window.localStorage.getItem('userId'),
+							realName: _this.txt,
+							cardNo: _this.id
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							}else{
+								mui.toast('保存成功！');
+								window.localStorage.setItem('realName',_this.txt);
+								window.localStorage.setItem('cardNo',_this.id);
+							}
+						},
+						error: function(error) {
+							console.log(error);
+						window.location.href = '../404.html';
+						}
+					});
+				}
+			}
+		})
+	</script>
+</html>

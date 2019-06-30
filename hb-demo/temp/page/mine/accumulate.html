@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>累计收益</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../../css/css/mine/accumulate.css">
+		<style type="text/css">
+			.ul-list>div:last-child {
+				border-bottom: 0.01rem solid #CECECE;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="contain" id="app" v-cloak>
+			<div class="main">
+				<header class="mui-bar mui-bar-nav">
+					<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+					<h1 class="mui-title">锁仓列表</h1>
+				</header>
+				<div class="head">
+					<p class="accumulate">
+						<span style="margin-right: 0.5rem;">释放</span>
+						<span v-text="list.eakeAvailableCount"></span>
+					</p>
+					<div class="hr"></div>
+					<p class="yesterday"><span style="margin-right: 0.5rem;">推荐人收益</span><span v-text="info.inviteTotal"></span></p>
+				</div>
+			</div>
+
+			<div class="sign">锁仓列表</div>
+			<div class="ul-list">
+				<div class="ul-item" v-for="(i,j) in info" style="display: block;height: auto;">
+					<!-- onclick="logins('./dailyEarnings.html','./dailyEarnings.html')" -->
+					<div style="width: 100%;">
+						<span class="p1" v-text="'+'+i.count"></span>
+						<span class="p2" v-text="i.coinName"></span>
+						<!-- <span style="float:right;">2019.10.1</span> -->
+					</div>
+					<div style="width: 100%;">
+						<span class="sp" v-text="i.content"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script src="../../js/public.js"></script>
+	<script>
+		mui.init();
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					list: {},
+					info: {},
+					nums: 0,
+					show: true,
+					shows: false,
+					showss: false,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/wallet',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						_this.list = data.data.userWallet;
+						_this.show = true;
+						_this.shows = false;
+
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+				$.ajax({
+					type: "POST",
+					url: api + '/user/freezeLog',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('加载失败~');
+							return false;
+						}
+						_this.info = data.data;
+						console.log(_this.info)
+						_this.show = true;
+						_this.shows = false;
+
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			}
+		})
+	</script>
+</html>

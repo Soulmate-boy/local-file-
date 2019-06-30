@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas变色</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-size: 12px;
+            margin: 10px;
+            font-family: simsun;
+            background: #fff;
+        }
+
+        p {
+            height: 12px;
+        }
+
+        span {
+            width: 12px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input id='ipt' type="type" placeholder="图片地址(回车)" autofocus="autofocus">
+    <div id="txt"></div>
+    <script>
+
+        var txt = document.getElementById('txt');
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var image = new Image();
+        var ipt = document.getElementById('ipt');
+        ipt.onchange = function () {
+            console.log(this.value);
+            if (ipt.value == null || ipt.value == "") {
+                image.src = "./demo1.jpg";
+            } else {
+                image.src = ipt.value;
+            }
+        }
+        if (ipt.value == null || ipt.value == "") {
+            image.src = "./demo1.jpg";
+        } else {
+            image.src = ipt.value;
+        }
+        image.crossOrigin = "Anonymous";
+        image.style.border = '1px solid gray';
+        console.log(image);
+        document.body.append(image);
+        //图片加载完执行
+        image.onload = function () {
+            console.log("图片的宽高：" + image.width + '-' + image.height)
+            canvas.width = image.width;
+            canvas.height = image.height;
+            canvas.style.border = image.style.border;
+            //将图片画进canvas
+            context.drawImage(image, 0, 0, image.width, image.height);
+            drawPx();
+            document.body.append(canvas);
+        };
+
+        // 获取像素,改变像素
+        function drawPx() {
+            //获取图片对象
+            var ImageData = context.getImageData(0, 0, image.width, image.height);
+            //获取图片的每一个像素
+            var px = ImageData.data;
+
+            var imgDataWidth = ImageData.width;
+            var imgDataHeight = ImageData.height;
+            console.log(imgDataWidth)
+            console.log(imgDataHeight)
+            console.log(px)
+            //颜色替换文字
+            var html = '';
+            // 不懂,截取一块一块的,
+            for (h = 0; h < imgDataHeight; h += 6) {
+                var p = '<p>';
+                for (w = 0; w < imgDataWidth; w += 3) {
+                    var index = (w + imgDataWidth * h) * 4;
+                    var r = px[index];
+                    var g = px[index + 1];
+                    var b = px[index + 2];
+                    var gray = getGray(r, g, b);
+                    p += toText(gray);
+                }
+                p += '</p>';
+                html += p;
+            }
+            txt.innerHTML = html;
+
+            //颜色调换，灰度值需要处理
+            for (var i = 0; i < px.length; i++) {
+                var r = px[i];
+                var g = px[i + 1];
+                var b = px[i + 2];
+                var gray = getGray(r, g, b);
+                px[i] = gray;
+                px[i + 1] = gray;
+                px[i + 2] = gray;
+            }
+
+            context.putImageData(ImageData, 0, 0, 0, 0, image.width / 2, image.height);
+        }
+
+        // 灰度转换
+        function getGray(R, G, B) {
+            //灰度计算公式
+            return (R * 299 + G * 587 + B * 114 + 500) / 1000;
+        }
+
+        // 符号替换
+        function toText(g) {
+            if (g <= 30) {
+                return '#';
+            } else if (g > 30 && g <= 60) {
+                return '&';
+            } else if (g > 60 && g <= 120) {
+                return '$';
+            } else if (g > 120 && g <= 150) {
+                return 'o';
+            } else if (g > 150 && g <= 180) {
+                return '*';
+            } else if (g > 180 && g <= 210) {
+                return '!';
+            } else if (g > 210 && g <= 240) {
+                return ';';
+            } else {
+                return '.';
+            }
+        }
+
+    </script>
+</body>
+
+</html>

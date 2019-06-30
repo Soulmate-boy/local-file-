@@ -1,0 +1,109 @@
+html,
+body {
+
+	background-color: white;
+}
+
+.mui-content {
+	background-color: white;
+}
+
+.mui-bar-nav {
+	height: 1.93rem;
+	background: url("../../../image/geren%20(1).png")no-repeat;
+	background-size: 100% 100%;
+	box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+	padding-top: 0.6rem;
+}
+
+.mui-bar-nav a,
+.mui-bar-nav h1 {
+	color: white;
+}
+
+.mui-bar-nav h1 {
+	line-height: 1.34rem;
+	font-size: 0.6rem;
+}
+
+/* 列表 */
+.mui-bar-nav~.mui-content {
+	margin-top: 0;
+}
+
+.mui-content .mui-table-view .mui-table-view-cell {
+	height: 1.44rem;
+	line-height: 1.44rem;
+	margin-top:0.2rem;
+}
+
+.mui-content>.mui-table-view:first-child {
+	margin-top: 0px;
+}
+
+.mui-content>.mui-table-view {
+	margin-top: -2px;
+}
+
+.mui-table-view-cell>a:not(.mui-btn) {
+	margin: 0px -15px;
+}
+
+.mui-content .mui-table-view-cell {
+	padding: 0px 15px;
+}
+
+/* 去顶部边框 */
+.mui-table-view:before {
+    background-color: transparent;
+}
+.mui-table-view a {
+	display: block;
+	height: 100%;
+}
+
+.tit {
+	height: 40%;
+	padding-right: 25px;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-items: center;
+	/* border: 1px solid red; */
+}
+
+.mui-navigate-right:after,
+.mui-push-left:after,
+.mui-push-right:after {
+	top:20px;
+	color: #3334c8;
+	/* border: 1px solid red; */
+}
+
+
+.tit .t1,
+.tit .time-1,
+.tit .time-2 {
+	color: #333333;
+}
+
+.tit .t1,
+.tit .p1,
+.tit .p2 {
+	font-size: 0.46rem;
+}
+
+.tit .p1,
+.tit .p2 {
+	color: #01c86e;
+}
+
+.tit .time-1,
+.tit .time-2,
+.tit .sp {
+	font-size: 0.36rem;
+}
+
+.tit .sp {
+	color: #999;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>身份认证</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style>
+			html,
+			body {
+				background: #fff;
+			}
+
+			header.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav a,
+			header.mui-bar-nav h1 {
+				color: white;
+			}
+
+			header.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav~.mui-content {
+				margin-top: 1.34rem;
+				padding-top: 0.6rem;
+				background: #fff;
+			}
+
+			.mui-content>img {
+				display: block;
+				width: 4rem;
+				height: 4rem;
+				margin: 2.33rem auto 1.6rem;
+			}
+
+			.mui-content>h4 {
+				color: #333333;
+				font-size: 0.5rem;
+				text-align: center;
+				margin-bottom:1.16rem ;
+			}
+
+			.mui-content>p {
+				word-break: break-all;
+				color: #333333;
+				font-size: 0.45rem;
+				line-height: 0.75rem;
+				text-align: left;
+				padding: 0 0.8rem;
+				margin: 0;
+			}
+
+			p.text-intent {
+				text-indent: 2em;
+			}
+
+			.msg {
+				height: 1.45rem;
+				padding: 0 0.85rem;
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+				align-items: center;
+				background-color: white;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				margin-top: 1.38rem;
+			}
+
+			.msg>span {
+				display: block;
+				color: #333;
+				font-size: 0.46rem;
+				margin-left: 0.5rem;
+				position: relative;
+			}
+
+			.msg>span:before {
+				content: '┃';
+				position: absolute;
+				top: 0;
+				left:-0.8rem;
+				color: #204bc8;
+			}
+
+			.msg>p {
+				height: 1.45rem;
+				color: #343434;
+				font-size: 0.46rem;
+				text-align: right;
+				line-height: 1.45rem;
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<h1 class="mui-title">关于我们</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../image/img/15d0b633ad3af18b80fca985037ad3d.png" alt="">
+			<h4>EAKE TOKEN V1.0</h4>
+			<p class="text-intent">EAKETOKEN实验室位于美国硅谷，拥有多年匿名币、DAPP研发实践经验，专注于创建利用区块链独特属性的真实应用程序。团队成员主要来自意大利、韩国，均曾任职于区块链及金融、科技领域，掌握行业顶尖技术知识，及资深丰富的工作经验。</p>
+			<p class="text-intent">EAKETOKEN是面向区块链综合应用服务的全球自治社区，其正在创建一种名为全球数字DAPP EAKETOKEN智能支付合约应用服务平台的区块链协议。</p>
+		</div>
+		<div class="msg">
+			<span>公司官网</span>
+			<p>http://www.eaketoken.com</p>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+// 		mui.back = function() {
+// 			plus.webview.currentWebview().parent().evalJs('mui.back()');
+// 		}
+	</script>
+</html>

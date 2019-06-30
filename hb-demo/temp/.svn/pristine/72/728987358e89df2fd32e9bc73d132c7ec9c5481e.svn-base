@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>会员协议</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<style type="text/css">
+			html,
+			body {
+				background-color: white;
+			}
+
+			.mui-content {
+				margin-top: 1.34rem;
+				background-color: white;
+			}
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			.mui-bar-nav~.mui-content {
+				padding-top: 1.04rem;
+			}
+
+			.mui-bar-nav .mui-pull-right {
+				line-height: 1.34rem;
+				font-size: 0.46rem;
+			}
+
+			article {
+				margin-top: 1.33rem;
+				padding: 1.42rem 0.48rem 0;
+				width: 100%;
+				color: #333333;
+			}
+
+			.contain {
+				margin-top: 0.36rem;
+				/* border: 1px solid red; */
+			}
+
+			.contain p {
+				font-size: 0.46rem;
+				color: #333333;
+				line-height: 0.75rem;
+			}
+
+			.contain div {
+				padding: 0 0.9rem;
+			}
+
+
+			.confirm>a {
+				display: block;
+				font-size: 0.46rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 2rem;
+				margin-bottom: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="#" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">会员协议</h1>
+		</header>
+		<article id="app" v-cloak>
+			<div class="contain">
+				<div>
+					<p>1、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能。</p>
+					<p>2、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能</p>
+					<p>3、金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能金豆是一掌金平台最重要的电子货币，是一掌金平台的核心功能</p>
+				</div>
+			</div>
+
+
+			<div class="confirm"><a onclick="submit()" href="javascript:;">确 认 协 议</a></div>
+
+		</article>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#app"
+		})
+	</script>
+</html>

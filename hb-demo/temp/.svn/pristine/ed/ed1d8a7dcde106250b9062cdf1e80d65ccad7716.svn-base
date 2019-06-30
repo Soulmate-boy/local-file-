@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>总资产</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/home/recognition.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="head">
+				<header class="mui-bar mui-bar-nav">
+					<a href="../../index.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+					<h1 class="mui-title">认 筹</h1>
+				</header>
+				<div class="num">
+					<span style="color: #fff;margin-right: 1.35rem;font-size: 0.5rem;">USDT</span>
+					<span style="color: #fff;font-size: 0.5rem;">0</span>
+				</div>
+			</div>
+
+			<div class="contain">
+				<div id="time" class="times">
+					<span>0</span>
+					<span>0</span>
+					<span>:</span>
+					<span>0</span>
+					<span>0</span>
+					<span>:</span>
+					<span>0</span>
+					<span>0</span>
+				</div>
+				<div class="article">
+					<h4>认筹规则</h4>
+					<p>1、认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规筹规则规则内容</p>
+					<p>2、认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内则内容</p>
+					<p>3、认筹规则内认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹规则内容认筹筹规则内容</p>
+					<div class="limit">
+						<h4>认筹额度</h4>
+						<!-- <span style="color: #E94033;">579000</span>
+						<span>/</span>
+						<span style="color: #60BF6C;">900000000</span> -->
+						<span id="fenzi" style="color: #E94033;">0</span>
+						<span>/</span>
+						<span id="fenmu" style="color: #60BF6C;">10</span>
+					</div>
+					<div id="demo1" class="scrollBar mui-progressbar">
+						<span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="mult">
+				<div class="type-foo">
+					<img src="../../image/img-e%20(3).png">
+					<span>USDT</span>
+				</div>
+				<div class="caculate">
+					<img src="../../image/sj%20(6).png" @click="num--">
+					<div style="width: 60%;">
+						<span v-text="num" style="color:#60BE6D;font-size: 0.46rem;"></span>
+						<span style="color: #333;font-size: 0.46rem;">/ 倍</span>
+					</div>
+					<img src="../../image/sj%20(7).png" @click="num++">
+				</div>
+			</div>
+
+			<div @click="req" class="confirm">确认认筹</div>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		$(function() {
+			var nums = 0;
+			var tim = $(".contain #time>span");
+			PourMeter(2019, 4, 29, 17, 9, 0, function(data) {
+				// console.log(data)
+				nums = data.seconds;
+				tim.eq(0).html(JSON.stringify(data.hours).replace(/\"/g, "").substring(0, 1));
+				tim.eq(1).html(JSON.stringify(data.hours).replace(/\"/g, "").substring(1, 2));
+				tim.eq(3).html(JSON.stringify(data.minutes).replace(/\"/g, "").substring(0, 1));
+				tim.eq(4).html(JSON.stringify(data.minutes).replace(/\"/g, "").substring(1, 2));
+				tim.eq(6).html(JSON.stringify(data.seconds).replace(/\"/g, "").substring(0, 1));
+				tim.eq(7).html(JSON.stringify(data.seconds).replace(/\"/g, "").substring(1, 2));
+			});
+		})
+		mui.init()
+
+
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					num: 1
+				}
+			},
+			mounted(){
+				this.bia(this.num);
+			},
+			methods: {
+				req() {
+					var _this = this;
+					console.log(this.num)
+					$.ajax({
+						type: "POST",
+						url: api + '/renchou',
+						data: {
+							userId: window.localStorage.getItem('userId'),
+							userId: _this.num, //倍数
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							}
+							mui.toast('已确认认筹！')
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					});
+				},
+				bia(r){
+					mui('#demo1').progressbar().setProgress(r*10);	
+					$("#fenzi").html(r)
+				}
+			},
+			watch: {
+				num() {
+					if (this.num <= 1) {
+						this.num = 1;
+					};
+					if(this.num >= 10){
+						this.num = 10;
+					}
+					this.bia(this.num);
+				}
+			}
+		});
+	</script>
+</html>

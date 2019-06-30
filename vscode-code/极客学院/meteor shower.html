@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>流星雨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+
+        #cn {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="cn"></canvas>
+
+
+<script>
+    var canvas = document.getElementById('cn');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width = window.innerWidth;
+    var h = canvas.height = window.innerHeight;
+    var counts = 30;
+    var starNums = new Array();
+    window.onresize = function () {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    };
+
+    // 构造函数
+    function Drop() {
+    }
+
+    //给函数原形添加方法
+    Drop.prototype = {
+        a:function(){
+          console.log(13)
+        },
+        //初始化方法
+        init: function () {
+            this.x = random(0, w);     //初始x的位置
+            this.y = 0;     //初始y的位置
+            this.r = 1;     //初始半径
+            this.vx = 0;    //水平方向加速度
+            this.vy = random(4, 5);    //竖直方向加速度
+            this.op = 1;    //初始透明度
+            this.vop = 0.96;    //透明度变化系数
+            this.l = 10;    //下落高度
+        },
+        //绘制方法
+        draw: function () {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+            ctx.strokeStyle = "yellow";
+            ctx.stroke();
+        },
+        //更新方法
+        updata: function () {
+            this.y += this.l
+        }
+    };
+
+    //随机数方法
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    console.log(random(4, 5))
+
+
+
+</script>
+</body>
+
+</html>

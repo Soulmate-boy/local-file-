@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<link rel="stylesheet" href="./css/clearCss.css">
+		<script src="./js/rem.js"></script>
+		<script src="./js/mui.min.js"></script>
+		<link href="./css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="./css/home.css" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="./css/css/CommonStyle.css">
+	</head>
+	<body>
+		<!-- <div style="height: 0.6rem;width: 100%;"></div> -->
+		<div id="box" v-cloak>
+			<div class="main">
+				<div class="header">
+					<header>
+						<div class="info-id" id="userName"></div>
+						<div id="lange" onclick="pack();"><img src="image/zn.png" alt=""></div>
+					</header>
+
+					<!-- <div id="en_zn" onclick="pack(event);">
+						<img src="../../image/z-e-f%20(3).png" alt="">
+					</div> -->
+					<div class="banner">
+						<a class="QR-code" href="javascript:;" onclick="logins('./page/home/scan.html','./page/home/scan.html')">
+							<img src="./image/s%20(18).png">
+						</a>
+						<p style="color:white;font-size: 0.4rem;">扫码支付</p>
+						<div class="wallet">
+							<a href="javascript:;" onclick="logins('./page/home/totalAssets.html','./page/mine/login.html')">
+								<p class="type-name">总资产钱包</p>
+								<p class="money" v-text="btcTotalCount">0.00</p>
+							</a>
+							<div class="line"></div>
+							<a href="javascript:;" onclick="logins('./page/mine/eake.html','./page/mine/login.html')" class="more">
+								<p class="type-name">EAKE钱包</p>
+								<p class="money" v-text="eakeTotalCount">0.00</p>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- 公告 -->
+				<a href="./page/home/notice.html" class="notice">
+					<img src="./image/s%20(21).png">
+					<marquee v-if="j==0" v-for="(i,j) in list_tit.announcements" behavior="" direction="" 
+					style="font-size:0.5rem;line-height: 1rem;" v-text="i.title"></marquee>
+				</a>
+			</div>
+			<div class="mui-slider" id="mylunbo">
+				<!-- 轮播图的图片容器 -->
+				<div class="mui-slider-group mui-slider-loop">
+
+					<div class="mui-slider-item  mui-slider-item-duplicate" v-if="banner_list.length > 0">
+						<a href="javascript:;"><img :src="banner_list[0].imgUrl"></a>
+					</div>
+					<!-- v-for="(i,j) in banner_list" -->
+					<!-- <div class="mui-slider-item">
+						<a href="javascript:;" onclick="logins('./page/home/recognition.html','./page/home/recognition.html')" id="count-down">
+							<img src="./image/sj%20(10).png">
+							<div id="time" class="current-time">
+								<span>0</span>
+								<span>0</span>
+								<span style="color: transparent;">:</span>
+								<span>0</span>
+								<span>0</span>
+								<span style="color: transparent;">:</span>
+								<span>0</span>
+								<span>0</span>
+							</div>
+						</a>
+					</div> -->
+					<div class="mui-slider-item" v-for="(i,j) in banner_list">
+						<a href="javascript:;"><img :src="i.imgUrl"></a>
+						 <!-- onclick="logins('./page/home/recognition.html','./page/home/recognition.html')" -->
+					</div>
+					<div class="mui-slider-item  mui-slider-item-duplicate" v-if="banner_list.length > 0">
+						<a href="javascript:;"><img :src="banner_list[0].imgUrl"></a>
+					</div>
+				</div>
+				<!-- 轮播图的小圆点容器 -->
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<!-- <div class="mui-indicator"></div> -->
+				</div>
+			</div>
+
+			<!-- 后期用 -->
+			<!-- <div class="info"></div> -->
+			<!-- 分类导航列表 -->
+			<ul class="menu">
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(11).png" alt="">
+						<div>商 城</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(1).png" alt="">
+						<div>存储借贷</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(2).png" alt="">
+						<div>游 戏</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(3).png" alt="">
+						<div>矿 池</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(4).png" alt="">
+						<div>ATM/POS</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(5).png" alt="">
+						<div>EAKE银行</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(6).png" alt="">
+						<div>旅 游</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(7).png" alt="">
+						<div>生 活</div>
+					</a>
+				</li>
+				<li class="li-item">
+					<a href="javascript:;">
+						<img src="./image/img/img-4%20(8).png" alt="">
+						<div>更 多</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<footer>
+			<nav class="mui-bar mui-bar-tab">
+				<a href="./index.html" class="mui-tab-item mui-active">
+					<img src="./image/img/n-img%20(4).jpg">
+					<div class="mui-tab-label">首页</div>
+				</a>
+				<a href="./page/number.html" class="mui-tab-item">
+					<img src="./image/img/n-img%20(18).jpg">
+					<div class="mui-tab-label">数字资产</div>
+				</a>
+				<a href="./page/market.html" class="mui-tab-item">
+					<img src="./image/img/n-img%20(2).jpg">
+					<div class="mui-tab-label">行情</div>
+				</a>
+				<a href="./page/mine.html" class="mui-tab-item">
+					<img src="./image/img/n-img%20(7).jpg">
+					<div class="mui-tab-label">个人中心</div>
+				</a>
+			</nav>
+		</footer>
+	</body>
+	<script src="./js/api.js"></script>
+	<script src="./js/jquery.js"></script>
+	<script src="./js/vue.js"></script>
+	<script src="./js/translate.js"></script>
+	<script src="./js/language.js"></script>
+	<script src="./js/public.js"></script>
+	<script src="./js/logding.js"></script>
+	<script>
+		mui.init({
+			keyEventBind: {
+				backbutton: true  //关闭back按键监听
+			}
+		});
+
+		mui('.mui-bar-tab').on('tap', 'a', function() {
+			window.top.location.href = this.href;
+		});
+
+		$(function() {
+			if (window.localStorage.getItem('userId') == null || window.localStorage.getItem('userId') == '') {
+				mui.openWindow({
+					url: './page/mine/login.html',
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+				})
+			}
+		})
+		const vm = new Vue({
+			el: '#box',
+			data() {
+				return {
+					btcTotalCount: '0.00',
+					eakeTotalCount: '0.00',
+					list_tit: {},
+					banner_list: [],
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('加载失败');
+							return false;
+						}
+						_this.list_tit = data.data;
+						_this.btcTotalCount = data.data.total;
+						_this.eakeTotalCount = data.data.eake;
+						_this.banner_list = data.data.banners;
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时')
+					}
+				});
+			},
+			updated: function(){
+				lunbo();
+			},
+			filters: {
+				kong(val) {
+					return val == null || val == {} ? '暂无公告！' : val;
+				}
+			}
+		})
+		$("#userName").html('ID:' + (window.localStorage.getItem('userName') == null ? '您还未登录' : window.localStorage.getItem(
+			'userName')));
+		function pack() {
+			translate();
+		}
+		var value = localStorage.getItem("language");
+		if (value == null) {
+			translate();
+		}
+		if (value === "1") {
+			$("#lange img").attr('src', 'image/zn.png'); //简体
+		} else {
+			//  if(value === '1')
+			$("#lange img").attr('src', 'image/en.png'); //英文
+		}
+		// 		else{
+		// 			$("#lange img").attr('src', 'image/f.png');//繁体
+		// 		}
+
+		// 		// 启动图
+		// 		mui.plusReady(function() {
+		// 			var launchFlag = plus.storage.getItem("launchFlag");
+		// 			console.log(launchFlag)
+		// 			if (launchFlag) {
+		// 				mui.openWindow({
+		// 					url: "./index.html",
+		// 					id: "main",
+		// 					extras: {
+		// 						mark: "index" //额外的参数，仅仅是个标识，实际开发中不用；
+		// 					}
+		// 				});
+		// 			} else {
+		// 				mui.openWindow({
+		// 					url: "./guidePage.html",
+		// 					id: "guidePage"
+		// 				});
+		// 			}
+		// 		});
+
+
+		// 倒计时
+		var tim = $("#time>span");
+		var t = {};
+		Tomorrow(function(d){
+			t.y = d.y;
+			t.m = d.m;
+			t.d = d.d;
+		})
+		PourMeter(t.y, t.m, t.d, 0, 0, 0, function(data) {
+			if (typeof(data.hours) == 'string') {
+				tim.eq(0).html(0);
+				tim.eq(1).html(JSON.stringify(data.hours).substring(2, 3));
+			} else {
+				tim.eq(0).html(JSON.stringify(data.hours).substring(0, 1));
+				tim.eq(1).html(JSON.stringify(data.hours).substring(1, 2));
+			}
+			if (typeof(data.minutes) == 'string') {
+				tim.eq(3).html(0)
+				tim.eq(4).html(JSON.stringify(data.minutes).substring(2, 3));
+			} else {
+				tim.eq(3).html(JSON.stringify(data.minutes).substring(0, 1));
+				tim.eq(4).html(JSON.stringify(data.minutes).substring(1, 2));
+			}
+			if (typeof(data.seconds) == 'string') {
+				tim.eq(6).html(0)
+				tim.eq(7).html(JSON.stringify(data.seconds).substring(2, 3));
+			} else {
+				tim.eq(6).html(JSON.stringify(data.seconds).substring(0, 1))
+				tim.eq(7).html(JSON.stringify(data.seconds).substring(1, 2));
+			}
+		});
+
+		// 获得slider插件对象
+		/*调用slider初始化轮播图*/
+		function lunbo(){
+			var gallery = mui('#mylunbo');
+			gallery.slider({
+				interval: 2500 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+		}
+
+		$(".menu").on('click', '.li-item', function() {
+			mui.toast('敬请期待！')
+		});
+		
+		
+		
+		// 判断是否是当前页面
+		function plusReady() {
+			var ws = plus.webview.currentWebview();
+			console.log("当前Webview窗口：" + ws.getURL());
+			var URL=plus.webview.currentWebview().getURL().split("/");
+			if (URL[URL.length - 1] == "index.html") {
+				//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+				var first = null;
+				mui.back = function() {
+					if (!first) {
+						first = new Date().getTime();
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 2000);
+					} else {
+						if (new Date().getTime() - first < 2000) {
+							plus.runtime.quit();
+						}
+					}
+				};
+			}
+		}
+		if (window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		
+	</script>
+	<script src="./js/versionUpdate.js"></script>
+</html>

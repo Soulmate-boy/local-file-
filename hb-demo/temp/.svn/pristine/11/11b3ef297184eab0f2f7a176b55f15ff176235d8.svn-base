@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>总资产</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/home/totalAssets.css" />
+		<style type="text/css">
+			html,
+			body {
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="number" v-cloak>
+			<div class="head">
+				<header class="mui-bar mui-bar-nav">
+					<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+					<h1 class="mui-title">总 资 产</h1>
+				</header>
+				<div class="num">
+					<span style="color: #fff;margin-right: 0.6rem;font-size: 0.5rem;">总资产</span>
+					<span style="color: #fff;font-size: 0.5rem;" v-text="sunMoney"></span>
+				</div>
+			</div>
+			<!-- <div class="tabbar">
+			<span>资产</span>
+			<span>最新价格（$）</span>
+			<span>涨跌幅</span>
+		</div> -->
+			<div class="tabbar">投资记录</div>
+
+			<div>
+				<img v-show="shows" src="../../image/timg%20(2).gif" style="display: none;width:20%;height:auto;margin:0 0 0 50%;transform: translateX(-50%);"
+				 alt="">
+				<p v-show="show_txt" style="text-align: center;margin-top:1.5rem;display: none;">
+					网络故障，数据加载失败！！！</p>
+				<div class="inform" v-show="show" style="display: none;">
+					<!-- 上升 ETH USDT BTC EAKE -->
+					<!-- ---------------------------------------------------------------------- -->
+					<!-- :class="/^\-/.test('0') ? 'decline' : 'rise'" -->
+					<div class="inform-item rise" style="pointer-events: none;">
+						<img src="../../image/img/img-4%20(1).jpg">
+						<div class="currency">EAKE</div>
+						<div class="c-money">${{money.eakePrice|prcse}}</div>
+						<!-- $options.filters.list_f_1() -->
+						<div class="arrow-t">
+							<!-- <img :src=" /^\-/.test('0') ? '../image/arrow2.png' : '../image/arrow1.png' "> -->
+							<span>{{list.eakeAvailableCount}}</span>
+							<!-- $options.filters.list_f_2() -->
+						</div>
+					</div>
+					<div class="inform-item rise">
+						<img src="../../image/img/img-4%20(2).jpg">
+						<div class="currency">BTC</div>
+						<div class="c-money">${{money.btcPrice |prcse}}</div>
+						<div class="arrow-t">
+							<span>{{list.btcAvailableCount |prcse}}</span>
+						</div>
+					</div>
+					<div class="inform-item rise">
+						<img src="../../image/img/img-4%20(3).jpg">
+						<div class="currency">ETH</div>
+						<div class="c-money">${{money.ethPrice|prcse}}</div>
+						<div class="arrow-t">
+							<span>{{list.ethaAvailableCount}}</span>
+						</div>
+					</div>
+					<div class="inform-item rise">
+						<img src="../../image/img-e%20(3).png">
+						<div class="currency">USDT</div>
+						<div class="c-money">${{money.usdtPrice |prcse}}</div>
+						<div class="arrow-t">
+							<span>{{list.usdtAvailableCount}}</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init()
+		mui.plusReady(function() {
+			console.log("当前页面URL：" + plus.webview.currentWebview().getURL());
+		});
+		var vm = new Vue({
+			el: "#number",
+			data() {
+				return {
+					list: {},
+					money: {},
+					show: false,
+					shows: true,
+					show_txt: false,
+					sunMoney: 0,
+					b: false
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/user/wallet ',
+					data: {
+						userId: window.localStorage.getItem('userId')
+					},
+					dataType: "json",
+					success: function(data) {
+						// console.log(data);
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						_this.list = data.data.userWallet;
+						console.log(_this.list);
+						_this.show = true;
+						_this.shows = false;
+
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+						_this.show_txt = true;
+						_this.shows = false;
+					}
+				});
+				// 价格
+				$.ajax({
+					type: "POST",
+					url: api + '/market',
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						_this.money = data.data;
+						console.log(_this.money)
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+					}
+				});
+				$.ajax({
+					type: "POST",
+					url: api + '/',
+					data: {
+						userId: window.localStorage.getItem('userId'),
+					},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('加载失败');
+							return false;
+						}
+						_this.sunMoney = data.data.total;
+						console.log(_this.sunMoney)
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时')
+					}
+				});
+			},
+
+			// 			watch: {
+			// 				list() {
+			// 					var _this=this;
+			// 					if (!this.b) {
+			// 						this.b = true;
+			// 					} else {
+			// 						this.$nextTick(function() {
+			// 							var $Money = $(".inform-item");
+			// 							$Money.each((index, item) => {
+			// 								var mon =$(item).find(".c-money").html().substring(1,);
+			// 								var num =$(item).find(".arrow-t>span").html();
+			// 								// console.log(num)
+			// 								_this.sunMoney+=mon*1*num;
+			// 							})
+			// 							$("#sunMoney").html(_this.sunMoney.toFixed(6));
+			// 						})
+			// 					}
+			// 				},
+			// 				money() {
+			// 					var _this=this;
+			// 					if (!this.b) {
+			// 						this.b = true;
+			// 					} else {
+			// 						this.$nextTick(function() {
+			// 							var $Money = $(".inform-item");
+			// 							$Money.each((index, item) => {
+			// 								var mon =$(item).find(".c-money").html().substring(1,);
+			// 								var num =$(item).find(".arrow-t>span").html();
+			// 								// console.log(num)
+			// 								_this.sunMoney+=mon*1*num;
+			// 								console.log(_this.sunMoney)
+			// 							})
+			// 							$("#sunMoney").html(_this.sunMoney.toFixed(6));
+			// 						})
+			// 					}
+			// 				},
+			// 			},
+			methods: {
+
+			},
+			filters: {
+				prcse(val) {
+					return val == null || val == '' ? val = '0' : val = val;
+				},
+				list_f_1(val) {
+					return this.list.total == 'undefined' ? val = '0' : val = val;
+				},
+				list_f_2() {
+					return this.list.eake == 'undefined' ? val = '0' : val = val;
+				}
+			}
+		})
+	</script>
+</html>

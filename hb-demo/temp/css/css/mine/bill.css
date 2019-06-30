@@ -1,0 +1,108 @@
+.mui-bar-nav {
+	height: 1.94rem;
+	background: url("../../../image/geren%20(1).png")no-repeat;
+	background-size: 100% 100%;
+	box-shadow: none;
+	padding-top:0.6rem;
+}
+
+header.mui-bar-nav .mui-title {
+	width: auto !important;
+	margin-right: 38px;
+	padding-left: 38px;
+	box-sizing: border-box;
+}
+
+.mui-bar-nav a,
+.mui-bar-nav h1 {
+	color: white;
+}
+
+.mui-bar-nav h1 {
+	line-height: 1.34rem;
+	font-size: 0.6rem;
+}
+
+
+.tabbar {
+	box-sizing: border-box;
+	width: 100%;
+	height: 1.76rem;
+	background: #fff;
+	font-size: 0.46rem;
+	color: #333;
+	padding: 0 0.44rem;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	position: fixed;
+	top: 1.93rem;
+	left: 0;
+	box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+	z-index: 20;
+}
+
+.tabbar input {
+	width: 2.5rem;
+	padding: 0.3rem 0;
+	font-size: 0.46rem;
+	color: #999;
+	border: none;
+	outline: none;
+	background: transparent;
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+
+
+#number {
+	/* border: 1px solid red; */
+	margin-top: 3.69rem;
+	width: 100%;
+	background: #fff;
+	padding: 0.3rem 0;
+}
+
+.inform-item {
+	width: 11.56rem;
+	height: 1.46rem;
+	background: #fff;
+	/* box-shadow: 0 0 0.2rem rgba(14, 20, 84, 0.3); */
+	/* box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3); */
+	/* border-radius: 0.4rem; */
+	margin: 0.3rem auto 0;
+	padding: 0 0.47rem;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.inform-item>img {
+	width: 0.94rem;
+	height: 0.94rem;
+	vertical-align: bottom;
+	border-radius: 50%;
+}
+
+.currency {
+	font-size: 0.56rem;
+	color: #333333;
+}
+
+.rise .c-money {
+	color: #00C96E;
+	font-size: 0.56rem;
+}
+
+.rise .arrow-t {
+	font-size: 0.4rem;
+	line-height: 0.4rem;
+	color: #333333;
+	text-align: right;
+}

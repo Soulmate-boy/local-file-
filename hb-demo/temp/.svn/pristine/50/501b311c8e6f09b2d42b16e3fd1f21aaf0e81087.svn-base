@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>查看秘钥</title>
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<style type="text/css">
+			input::-webkit-input-placeholder,
+			textarea::-webkit-input-placeholder {
+				color: #cecece;
+				font-size: 0.36rem;
+			}
+
+			body {
+				background: #fff;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			header.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav a {
+				color: white;
+			}
+
+			header.mui-bar-nav a>span {
+				font-size: 0.6rem;
+			}
+
+			header.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+				color: white;
+			}
+
+
+			.contain {
+				width: 100%;
+				box-sizing: border-box;
+				margin-top: 0.6rem;
+				padding: 2.3rem 0.9rem 0;
+			}
+
+			.secret-key {
+				width: 100%;
+				padding: 0.6rem 0.45rem;
+				box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+				color: #999999;
+				font-size: 0.5rem;
+				display: -webkit-box;
+				word-break: break-all;
+			}
+
+
+			.save,
+			.copy {
+				font-size: 0.5rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 1rem;
+			}
+
+			.copy {
+				margin-top: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<!-- ../mine.html -->
+				<h1 class="mui-title">查看秘钥</h1>
+			</header>
+			<div class="contain">
+				<div class="secret-key" id="cptar"></div>
+				<div class="copy" id="cpbtn">复 制 秘 钥</div>
+				<!-- <div id="save" @click="save" class="save">保 存 图 片</div> -->
+			</div>
+		</div>
+
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/clipboard.min.js"></script>
+	<script src="../../js/html2canvas.min.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init()
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					bitmap: null,
+				}
+			},
+			mounted() {
+				this.mimiyao = window.localStorage.getItem('privateKey');
+				$("#cptar").html(this.mimiyao)
+
+
+			},
+			methods: {
+				save() {
+					var _this = this;
+					console.log('保存') 
+					// 					html2canvas(document.body, {
+					// 						allowTaint: true,
+					// 					}).then(function(canvas) {
+					// 						console.log(canvas.toDataURL());
+					// 						_this.bitmap = canvas.toDataURL()
+					// 					});
+					var self = plus.webview.currentWebview();
+					console.log(self.fileUrl)
+					plus.nativeUI.showWaiting('加载中...')
+					var dtask = plus.downloader.createDownload(self.fileUrl, {}, function(d, status) {
+						// 下载完成
+						if (status == 200) {
+							// mui.toast("下载成功,文件保存在" + d.filename)
+							plus.gallery.save(d.filename, function() { //保存到相册方法
+								plus.nativeUI.closeWaiting()
+								mui.toast('已保存到手机相册');
+							}, function() {
+								plus.nativeUI.closeWaiting()
+								mui.toast('保存失败，请重试！');
+							});
+						} else {
+							mui.toast("下载失败")
+						}
+
+						// 					html2canvas(document.body, {
+						// 						allowTaint: true,
+						// 					}).then(function(canvas) {
+						// 						console.log(canvas.toDataURL());
+						// 				
+						// 					});
+					});
+					dtask.start();
+				}
+			}
+		})
+		//复制
+		var clipboard = new ClipboardJS('#cpbtn', {
+			text: function() {
+				return $("#cptar").text();
+			}
+		});
+
+		clipboard.on('success', function(e) {
+			mui.toast('复制成功!')
+		});
+
+		clipboard.on('error', function(e) {
+			mui.toast('复制失败!')
+		});
+	</script>
+</html>

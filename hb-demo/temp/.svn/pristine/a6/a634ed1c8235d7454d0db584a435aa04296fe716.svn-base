@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>行情</title>
+		<link rel="stylesheet" href="../css/clearCss.css">
+		<script src="../js/rem.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!-- 样式表 -->
+		<link rel="stylesheet" href="../css/css/CommonStyle.css">
+		<link rel="stylesheet" type="text/css" href="../css/market.css" />
+		<style type="text/css">
+			#number {
+				margin-bottom: 1.65rem;
+			}
+
+			body,
+			html {
+				/* width: 100%; */
+				background: #fff;
+			}
+
+			.inform-item>div {
+				width: 25%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="number" v-cloak>
+			<header>行 情</header>
+			<div class="tabbar">
+				<span>资产</span>
+				<span>最新价格（$）</span>
+				<span>涨跌幅</span>
+			</div>
+			<img v-show="shows" src="../image/timg%20(2).gif" style="display: none;width:20%;height:auto;margin:0 0 0 50%;transform: translateX(-50%);"
+			 alt="">
+			<p v-show="show_txt" style="text-align: center;margin-top:1.5rem;display: none;">
+				网络故障，数据加载失败！！！</p>
+			<div class="inform" v-show="show" style="display: none;">
+				<!-- 上升 ETH USDT BTC EAKE -->
+				<div class="inform-item" :class="/^\-/.test(list.eake) ? 'decline' : 'rise'">
+					<img src="../image/img/img-4%20(1).jpg">
+					<div class="currency">EAKE</div>
+					<div class="c-money">${{list.eakePrice |prcse}}</div>
+					<div class="arrow-t">
+						<img :src=" /^\-/.test(list.eake) ? '../image/arrow2.png' : '../image/arrow1.png' ">
+						<span>{{list.eake | prcse}}</span>
+					</div>
+				</div>
+				<div class="inform-item" :class="/^\-/.test(list.btc) ? 'decline' : 'rise'">
+					<img src="../image/img/img-4%20(2).jpg">
+					<div class="currency">BTC</div>
+					<div class="c-money">${{list.btcPrice |prcse}}</div>
+					<div class="arrow-t">
+						<img :src=" /^\-/.test(list.btc) ? '../image/arrow2.png' : '../image/arrow1.png' ">
+						<span>{{list.btc | prcse}}</span>
+					</div>
+				</div>
+				<div class="inform-item" :class="/^\-/.test(list.eth) ? 'decline' : 'rise'">
+					<img src="../image/img/img-4%20(3).jpg">
+					<div class="currency">ETH</div>
+					<div class="c-money">${{list.ethPrice |prcse}}</div>
+					<div class="arrow-t">
+						<img :src=" /^\-/.test(list.eth) ? '../image/arrow2.png' : '../image/arrow1.png' ">
+						<span>{{list.eth | prcse}}</span>
+					</div>
+				</div>
+				<div class="inform-item" :class="/^\-/.test(list.usdt) ? 'decline' : 'rise'">
+					<img src="../image/img-e%20(3).png">
+					<div class="currency">USDT</div>
+					<div class="c-money">${{list.usdtPrice | prcse}}</div>
+					<div class="arrow-t">
+						<img :src=" /^\-/.test(list.usdt) ? '../image/arrow2.png' : '../image/arrow1.png' ">
+						<span>{{list.usdt | prcse}}</span>
+					</div>
+				</div>
+
+				<!-- 下降 -->
+				<!-- <div class="inform-item decline">
+					<img src="../image/B-icon.png">
+					<div class="currency">ETH</div>
+					<div class="c-money">$17.120</div>
+					<div class="arrow-t"><img src="../image/arrow2.png"><span>-12%</span></div>
+				</div> -->
+			</div>
+		</div>
+
+		<footer>
+			<nav class="mui-bar mui-bar-tab">
+				<a href="../index.html" class="mui-tab-item">
+					<img src="../image/s%20(15).png">
+					<div class="mui-tab-label">首页</div>
+				</a>
+				<a href="./number.html" class="mui-tab-item">
+					<img src="../image/s%20(17).png">
+					<div class="mui-tab-label">数字资产</div>
+				</a>
+				<a href="./market.html" class="mui-tab-item  mui-active">
+					<img src="../image/s%20(19).png">
+					<div class="mui-tab-label">行情</div>
+				</a>
+				<a href="./mine.html" data-href="./mine/login.html" class="mui-tab-item">
+					<img src="../image/s%20(23).png">
+					<div class="mui-tab-label">个人中心</div>
+				</a>
+			</nav>
+		</footer>
+
+	</body>
+
+	<script src="../js/api.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/translate.js"></script>
+	<script src="../js/language.js"></script>
+	<script src="../js/logding.js"></script>
+	<script>
+		mui.init()
+
+		mui('.mui-bar-tab').on('tap', 'a', function() {
+			window.top.location.href = this.href;
+		});
+
+		$(function() {
+			if (window.localStorage.getItem('userId') == null || window.localStorage.getItem('userId') == '') {
+				mui.openWindow({
+					url: './page/mine/login.html',
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: 200 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+				})
+			}
+		})
+
+		new Vue({
+			el: "#number",
+			data() {
+				return {
+					list: {},
+					show: false,
+					show_txt:false,
+					shows: true,
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/market',
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						if (data.code == 0) {
+							mui.toast('刷新失败~');
+							return false;
+						}
+						_this.list = data.data;
+						_this.show = true;
+						_this.shows = false;
+					},
+					error: function(error) {
+						console.log(error);
+						mui.toast('网络超时');
+						_this.shows = false;
+						_this.show_txt=true;
+					}
+				});
+
+			},
+			methods: {
+
+			},
+			filters: {
+				prcse(val) {
+					// return val == null || val == '' ? val = '0' : val = val;
+					return val;
+				},
+			}
+		})
+// 		//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+// 		var first = null;
+// 		mui.back = function() {
+// 			if (!first) {
+// 				first = new Date().getTime();
+// 				mui.toast('再按一次退出应用');
+// 				setTimeout(function() {
+// 					first = null;
+// 				}, 2000);
+// 			} else {
+// 				if (new Date().getTime() - first < 2000) {
+// 					plus.runtime.quit();
+// 				}
+// 			}
+// 		};
+// 		mui.back = function(){
+// 			window.location.href = './number.html';
+// 		}
+	</script>
+</html>

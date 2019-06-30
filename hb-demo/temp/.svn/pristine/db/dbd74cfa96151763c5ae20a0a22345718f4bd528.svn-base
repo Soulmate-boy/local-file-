@@ -1,0 +1,140 @@
+html,body{
+	background-color:white;
+}
+/* bug处理 */
+.mui-content nav{
+	justify-content: space-around !important;
+}
+.mui-content{
+	width:100%;
+	height:6.83rem;
+	background:url("../../../image/img/n-img%20(17).jpg")no-repeat;
+	background-size:100% 6.83rem;
+	position: fixed;
+	top: 0;
+}
+.mui-content .mui-bar-nav{
+	border:none;
+	background-color:rgba(0,0,0,0);
+	box-shadow:none;
+}
+.mui-content .mui-title{
+	color:white;
+	height:1.94rem;
+	line-height: 2.54rem;
+	font-size: 0.6rem;
+	font-weight: 500;
+}
+
+.mui-content .Personal{
+	height:5.13rem;
+}
+
+.Personal{
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	/* border: 1px solid red; */
+}
+ .Personal .box{
+	width:50%;
+	margin-top:2.5rem;
+	/* border: 1px solid red; */
+
+}
+ .Personal .box:nth-child(1):before{
+	 content: "│";
+	 position: absolute;
+	 top:3.2rem;
+	 right:calc(50% + -6px);
+	 color:white;
+ }
+ .Personal .box h4,
+ .Personal .box h5,
+ .Personal .box p{
+	 color:white;
+	 text-align: center;
+ }
+ 
+ .Personal .box h4{
+	font-size: 0.6rem;
+	height:0.78rem;
+	line-height: 0.78rem;
+ }
+ 
+.Personal .box h5{
+	font-size: 0.6rem;
+	height:0.68rem;
+	line-height: 0.68rem;
+ }
+.Personal .box p{
+	font-size:0.5rem;
+	height:0.6rem;
+	line-height: 0.6rem;
+}
+.mui-content nav{
+	width:10.64rem;
+	height:2.56rem;
+	border-radius:0.4rem;
+	margin:0 auto 0.3rem;
+	padding:0 0.5rem;
+	background-color:white;
+	box-shadow: 0px 1px 15px rgba(14,20,84,0.3);
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.list-menu{
+	margin-top:8rem;
+	margin-bottom:1.8rem;
+}
+nav .fn{
+	width:2.5rem;
+	height:2.5rem;
+	border-radius:50%;
+	/* background-color:#412684; */
+	/* overflow: hidden; */
+}
+nav .fn a{
+	display: block;
+	width:100%;
+	height:100%;
+	text-align: center;
+	padding:0.3rem 0;
+}
+nav .fn a>img{
+	display: block;
+	width:1.45rem;
+	height:1.45rem;
+	margin:0 auto;
+}
+nav .fn a>p{
+	color:#333333;
+	margin-top:0;
+	margin-bottom:0;
+	font-size: .46rem;
+	white-space: nowrap;
+}
+
+/* 列表 */
+.list .mui-table-view{
+	margin-top:0.36rem;
+	box-shadow: 0px 1px 15px rgba(14,20,84,0.3);
+}
+.list .mui-table-view-cell{
+	height:1.44rem;
+	padding:8px 15px;
+}
+.list .mui-table-view-cell a{
+	color:#333;
+	font-size: 0.46rem;
+	line-height: 1.44rem;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	padding-right:1rem;
+}
+.list .mui-navigate-right:after, .mui-push-right:after {
+	color:#3432ca;
+}

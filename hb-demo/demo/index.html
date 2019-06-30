@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>弹出层demo</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+		<h1 style="text-align: center;margin-top:50%;">弹出层demo</h1>
+		<button id="btn1">弹出加载图</button>
+		<button id="btn2">弹出文字</button>
+		<button id="btn3">加载图完毕提示文字</button>
+	</body>
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="./logding.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#btn1").on('click', function() {
+				$dw.imgShow({
+					cs:null
+				});
+				// 				setTimeout(function(){
+				// 					$dw.imgShow({img_out:false});
+				// 				},2000)
+			})
+			$("#btn2").on('click', function() {
+				$dw.textShow();
+			})
+			$("#btn3").on('click', function() {
+				$dw.all();
+			})
+			/**
+			 * 
+			 * 2019-4-12
+			 * 弹出层demo使用说明：
+			 * 本方法基于jquery
+			 * 第一步：在页面引入jq.js 和 logding.js (注意先后顺序)
+			 * 第二步：在html文档中直接调用 Wdd(参数) 即可
+			 * 第三步：自己看，不明白的去csdn留言 https://blog.csdn.net/china_dou
+			 * 
+			 * 可传参数：
+			 * 	
+			 * 
+			 * -------------$dw.all({}):
+			 * 
+			 *  width: "6rem",
+				height: "4.1rem",
+				backgroundColor: "rgba(0,0,0,0.8)",
+				img: './w-loading.gif',
+				time: 30000,
+				img_out:true, //(必选)默认true，ajax调用后改为false
+				
+				------------$dw.imgShow({}):
+				
+				color: "#cecece",
+				fontSize: '12px',
+				text: '欢迎关注CSDN:https://blog.csdn.net/china_dou',
+				time: 1000,
+			 * 
+			 * 	-------------$dw.textShow():
+			 * 
+			 *  width: "6rem",
+				height: "4.1rem",
+				backgroundColor: "rgba(0,0,0,0.8)",
+				img: './w-loading.gif',
+				time: 30000,
+				img_out:true, //(必选)默认true，ajax调用后改为false
+				color: "#cecece",
+				fontSize: '12px',
+				text: '欢迎关注CSDN:https://blog.csdn.net/china_dou',
+				time: 1000,
+				marginTop: '65%', //可选，解决上边图片遮挡下边的文字
+			 * 
+			 */
+		})
+	</script>
+</html>

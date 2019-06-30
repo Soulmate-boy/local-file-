@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>日常骚</title>
+	</head>
+	<body>
+		<!--  onload="setInterval(()=>document.body.innerHTML = new Date().toDateString().slice(10,19))" -->
+		<script>
+			{
+				let name1 = '1'
+				// 1.空验证
+				if (name1 !== null || name1 !== undefined || name1 !== '') {
+					let name2 = name1;
+				}
+
+				// 简便
+				let name2 = name1 || '';
+			}
+
+			{
+				// 2.优雅的表示超多数字
+				for (let i = 0; i < 10000; i++) {
+
+				};
+
+				// 简便
+				for (let i = 0; i < 1e4; i++) {
+
+				}
+			}
+
+			{
+				// 更短的调用函数
+				function x() {
+					console.log("x")
+				};
+
+				function y() {
+					console.log("y")
+				};
+				let z = false;
+				if (z) {
+					x();
+				} else {
+					y();
+				};
+
+				// 简便-->这里函数调用不写"（）"
+				(z ? x : y)();
+			}
+
+			{
+				// 另一种undefined
+				var data = void 0;
+			}
+
+			{
+				// 优雅的向下取整
+				var a = ~~2.33; //这种方法也可以将字符串转化成数字类型
+				var b = 2.33 | 0;
+				var c = 2.33 >> 0;
+			}
+
+			{
+				// SB
+
+			}
+
+			{
+				// NB
+
+			}
+
+			{
+				// 过去7天的数组集合
+				console.log([...Array(7).keys()].map(days => new Date(Date.now() - 8640000 * days)))
+				// 未来7天的数组集合
+				console.log([...Array(7).keys()].map(days => new Date(Date.now() + 8640000 * days)))
+			}
+
+			{
+				// 随机ID-->不安全
+				console.log(Math.random().toString(36).substring(2));
+			}
+
+			{
+				// 获取URL的查询
+				q = {};
+				location.search.replace(/([^?&=]+)=([^&]+)/g, (_, k, v) => q[k] = v);
+				q;
+			}
+
+			{
+				//数组混淆
+				let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+				console.log(arr);
+				(arr) => arr.slice().sort(() => Math.random() - 0.5)
+				console.log(arr);
+			}
+
+			{
+				// 生成十六进制颜色代码
+				let color = '#' + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0');
+				console.log(color)
+			}
+
+			{
+				// 臭名昭著的面试题
+				for (i = 0; ++i < 101; console.log(i % 5 ? f || i : f + 'Buzz')) f = i % 3 ? '' : 'Fizz';
+
+			}
+
+			{
+				// 去重
+				let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+				[...new Set(arr)]
+			}
+
+			{
+				// 创建特定大小的数组
+				console.log([...Array(3).keys()])
+			}
+
+			{
+				// 键盘侠
+				var a = (_=>[..."`1234567890-=~~QWERTYUIOP[]\\~ASDFGHJKL;'~~ZXCVBNM,./~"].map(x=>(o+=`/${b='_'.repeat(w=x<y?2:' 667699'[x=["BS","TAB","CAPS","ENTER"][p++]||'SHIFT',p])}\\|`,m+=y+(x+' ').slice(0,w)+y+y,n+=y+b+y+y,l+=' __'+b)[73]&&(k.push(l,m,n,o),l='',m=n=o=y),m=n=o=y='|',p=l=k=[])&&k.join``)()
+				document.body.innerHTML = a;
+				console.log(a)
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,162 @@
+whtml,
+body {
+	background-color: white;
+}
+
+.mui-content {
+	margin-top: 1.34rem;
+	background-color: white;
+}
+
+.mui-bar-nav {
+	height: 1.94rem;
+	background: url("../../../image/geren%20(1).png")no-repeat;
+	background-size: 100% 100%;
+	padding-top:0.6rem;
+}
+
+header.mui-bar-nav .mui-title {
+	width: auto !important;
+	margin-right: 38px;
+	padding-left: 38px;
+	box-sizing: border-box;
+}
+
+.mui-bar-nav a,
+.mui-bar-nav h1 {
+	color: white;
+}
+
+.mui-bar-nav h1 {
+	line-height: 1.34rem;
+	font-size: 0.6rem;
+}
+
+.mui-bar-nav~.mui-content {
+	padding-top: 1.04rem;
+}
+
+.mui-bar-nav .mui-pull-right {
+	line-height: 1.34rem;
+	font-size: 0.46rem;
+}
+
+.row1 .mui-input-row label~select,
+.row1 .mui-input-row label~input,
+.row2 .mui-input-row label~input {
+	width: 45%;
+	margin-top: 0.1rem;
+}
+
+.row1 .mui-input-row,
+.row2 .mui-input-row {
+	height: 1.44rem;
+}
+
+.row1 .mui-input-row>span {
+	float: right;
+	line-height: 1.1rem;
+	color: #3432cc;
+}
+
+.row1 .mui-input-row label,
+.row2 .mui-input-row label {
+	line-height: 0.8rem;
+	color: #333;
+	font-size: 0.46rem;
+	white-space: nowrap;
+}
+
+.pl {
+	color: #999;
+	font-size: 17px;
+}
+
+.propt {
+	position: absolute;
+	bottom: 0.4rem;
+	right: 1.72rem;
+	color: #999999;
+	font-size: 0.4rem;
+}
+
+.propt i {
+	color: #3334c8;
+	font-size: 0.4rem;
+}
+
+.row1.mui-input-group,
+.row2.mui-input-group {
+	box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+}
+
+.row1 .mui-input-row input,
+.row2 .mui-input-row input {
+	text-align: right;
+}
+
+.se {
+	appearance: none;
+	-webkit-appearance: none;
+	text-align: right;
+}
+
+.row2 .mui-btn:enabled:active,
+.row2 button:enabled:active {
+	background-color: white;
+	color: #3435c9;
+	border: 1px solid #3435c9;
+}
+
+.row2 .mui-btn-success,
+.row2 .mui-btn {
+	border: 1px solid #3435c9;
+	width: auto;
+	height: 0.54rem;
+	line-height: 0rem;
+	margin-top: 0.35rem;
+	margin-right: 0.3rem;
+	padding: 10px;
+	color: #3435c9;
+	font-size: 0.38rem;
+}
+
+/* .btns.mui-btn.mui-btn-blue {
+	width: 9.72rem;
+	height: 1.33remn;
+	border: none;
+	border-radius: 0.4rem;
+	background-color: #531cef;
+	margin: 0.6rem 0 0.6rem calc((100% - 9.72rem)/2);
+	outline: none;
+} */
+.go-submit>a {
+	display: block;
+	font-size: 0.46rem;
+	color: #fff;
+	width: 9.7rem;
+	height: 1.23rem;
+	line-height: 1.23rem;
+	background: url("../../../image/btn-long.png") no-repeat center/contain;
+	color: #fff;
+	text-align: center;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	margin-top: 2rem;
+	/* margin-bottom: 2rem; */
+
+}
+
+.msg {
+	list-style-type: none;
+	margin: 0.8rem 0 2rem;
+	padding: 0;
+	padding-left: 0.81rem;
+	font-size: 0.44rem;
+	color: #999999;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	font-size: 0.4rem;
+	color: #999999;
+}

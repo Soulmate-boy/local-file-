@@ -1,0 +1,108 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>渐变demo</title>
+    <style>
+        ul {
+            margin: 50px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            justify-content: center;
+            grid-template-columns: 200px 200px 200px;
+            grid-template-rows: 200px 200px;
+            grid-gap: 20px;
+            grid-template-areas:
+                "m1 m2 m3"
+                "m4 m5 m6";
+        }
+
+        .b-1 {
+            grid-area: m1;
+        }
+
+        .b-2 {
+            grid-area: m2;
+        }
+
+        .b-3 {
+            grid-area: m3;
+        }
+
+        .b-4 {
+            grid-area: m4;
+        }
+
+        .b-5 {
+            grid-area: m5;
+        }
+
+        .b-6 {
+            grid-area: m6;
+        }
+
+
+        ul>li {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        ul>li:nth-child(1n) {
+            background-color: rgb(47, 202, 223);
+        }
+
+        ul>li:nth-child(2n) {
+            background-color: sandybrown;
+        }
+
+        /* 渐变 */
+
+        .item-1 {
+            background: linear-gradient(60deg, blue, pink, yellow);
+        }
+
+        .item-2 {
+            background: linear-gradient(to bottom right, blue, pink);
+        }
+
+        .item-3 {
+            background: linear-gradient(to right, blue, pink);
+        }
+
+        .item-4 {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+
+        }
+
+        .item-5 {
+            background: radial-gradient(blue, pink, violet);
+        }
+
+        .item-6 {}
+    </style>
+</head>
+
+<body>
+
+    <ul>
+        <li class="item-1 b-1">渐变demo-01</li>
+        <li class="item-2 b-2">渐变demo-02</li>
+        <li class="item-3 b-3">渐变demo-03</li>
+        <li class="item-4 b-4">渐变demo-04</li>
+        <li class="item-5 b-5">渐变demo-05</li>
+        <li class="item-6 b-6">渐变demo-06</li>
+    </ul>
+
+
+
+    <script>
+
+    </script>
+</body>
+
+</html>

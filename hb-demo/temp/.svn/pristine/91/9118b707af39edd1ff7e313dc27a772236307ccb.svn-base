@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>公告</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/home/notice.css" />
+
+	</head>
+	<body>
+		<div id="box" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">公 告</h1>
+			</header>
+			
+			<div class="type-box first" v-show="show_list" style="display: none;" v-for="(i,j) in list">
+				<!--  list.announcements -->
+				<div class="date-time">
+					<p>{{i.createTime |timer_1}}</p>
+					<p>{{i.createTime |timer_2}}</p>
+				</div>
+				<div class="plate">
+					<a :href="'./noticeDetail.html?detailId='+i.id" class="info bg1">
+						<p v-text="i.title"></p>
+						<p v-text="i.author"></p>
+						<div class="foo1"></div>
+						<!-- v-text="i.content" -->
+						<div class="foo2" v-text="i.createTime"></div>
+					</a>
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script src="../../js/public.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					list: {},
+					show_list: false
+				}
+			},
+			mounted() {
+				var _this = this;
+				$.ajax({
+					type: "POST",
+					url: api + '/notices',
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						console.log(data)
+						if (data.code == 0) {
+							mui.toast('请求超时..');
+							return false;
+						}
+						_this.list = data.data;
+						_this.show_list = true;
+						console.log(_this.list)
+					},
+					error: function(error) {
+						console.log(error);
+						window.location.href = '../404.html';
+					}
+				});
+			},
+			filters: {
+				timer_1(val) {
+					return val.trim().split(/\s+/)[0];
+				},
+				timer_2(val) {
+					return val.trim().split(/\s+/)[1];
+				},
+				// 				eval(val){
+				// 					return eval('"'+i.content+'"');
+				// 				}
+			}
+		})
+	</script>
+</html>

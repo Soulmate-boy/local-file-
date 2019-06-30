@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>意见反馈</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			header.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: 0px 1px 15px rgba(14, 20, 84, 0.3);
+				padding-top:0.6rem;
+			}
+			header.mui-bar-nav a,
+			header.mui-bar-nav h1 {
+				color: white;
+			}
+			header.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+			body {
+				background: #fff;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			.info {
+				margin-top: 1.33rem;
+				padding: 1rem 0.5rem;
+			}
+
+			.info>p {
+				font-size: 0.5rem;
+				line-height: 0.7rem;
+				color: #666;
+				margin-bottom: 0.1rem;
+			}
+
+			.contact {
+				margin-top: 1rem;
+			}
+
+			.info textarea {
+				width: 100%;
+				height: 7.56rem;
+				font-size: 0.46rem;
+				line-height: 0.6rem;
+				color: #666;
+				padding: 0.2rem;
+				margin-top: 0.3rem;
+			}
+
+			.info input {
+				width: 100%;
+				height: 1.2rem;
+				font-size: 0.46rem;
+				line-height: 0.46rem;
+				color: #666;
+				padding: 0.2rem;
+				outline: none;
+				margin-top: 0.3rem;
+			}
+
+			.go-submit>a {
+				display: block;
+				font-size: 0.46rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<!-- <header>
+				<a href="../mine.html"><span>〈</span></a>
+				<h1>意见反馈</h1>
+				<span>意见</span>
+			</header> -->
+
+			<header class="mui-bar mui-bar-nav">
+				<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<!-- ../mine.html -->
+				<h1 class="mui-title">意见反馈</h1>
+			</header>
+			<div class="info">
+				<p class="feadback">反馈信息</p>
+				<textarea v-model="txt" rows="" cols="" placeholder="请写下你的反馈意见"></textarea>
+				<p class="contact">您的联系方式</p>
+				<input v-model="phone" type="text" placeholder="请输入你的手机号" />
+
+				<div class="go-submit"><a href="javascript:;" @click="couple">一 键 反 馈</a></div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					txt:'',
+					phone:'',
+				}
+			},
+			methods:{
+				couple(){
+					console.log(this.txt+this.phone);
+					var _this = this;
+					if(_this.txt == ''){
+						mui.toast('请填写反馈内容~');
+						return false;
+					}else if(!(/^1[34578]\d{9}$/.test(_this.phone))){
+						mui.toast('手机号不符合规则')
+						return false;
+					}
+					$.ajax({
+						type: "POST",
+						url: api + '/feedback',
+						data: {
+							content: _this.txt,
+							phone :_this.phone
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							}
+							mui.toast('感谢您提出宝贵的意见！');
+							_this.txt = '';
+							_this.phone = '';
+						},
+						error: function(error) {
+							console.log(error);
+							window.location.href = '../404.html';
+						}
+					});
+				}
+			}
+		})
+	</script>
+</html>

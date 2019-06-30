@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>兑换</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/css/CommonStyle.css">
+		<link rel="stylesheet" href="../../css/css/mine/exchange.css">
+		<style type="text/css">
+			.row1 .mui-input-row>span {
+				line-height: 1.44rem;
+			}
+
+			.mui-input-group:after {
+				background-color: transparent;
+			}
+
+			.pp {
+				text-indent: 1em;
+			}
+
+			.row1 .mui-input-row>span {
+				float: left;
+			}
+
+			.imgs {
+				display: inline-block;
+				width: 25px;
+				height: 25px;
+				float: left;
+				margin-top:10px;
+				margin-left:20px;
+			}
+
+			.lab {
+				line-height: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:;" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+			<h1 class="mui-title">支 付</h1>
+		</header>
+		<div class="mui-content" id="app" v-cloak>
+			<p class="pp">消耗</p>
+			<form class="row1 mui-input-group">
+				<div class="mui-input-row">
+					<img class="imgs" src="../../image/img-e%20(3).png" alt="">
+					<label class="lab">USDT</label>
+					<span id="sp1" style="color:green;" v-text="usdt">0</span>
+				</div>
+			</form>
+			<p class="pp" style="margin-top:10px;">获得</p>
+			<form class="row1 mui-input-group">
+				<div class="mui-input-row">
+					<img class="imgs" src="../../image/img-e%20(1).png" alt="">
+					<label class="lab">EAKE</label>
+					<span id="sp2" style="color:red;" v-text="eake">0</span>
+				</div>
+			</form>
+			<form class="row2 mui-input-group">
+				<div class="mui-input-row">
+					<label>交易密码</label>
+					<input class="cline" id="payPassword" style="font-size: 0.46rem;" type="password" placeholder="请输入交易密码">
+				</div>
+			</form>
+
+			<div class="go-submit"><a @click="submit()" href="javascript:;">确 认 支 付</a></div>
+
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init();
+
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					usdt:0,
+					eake:0,
+					num:1,
+				}
+			},
+			mounted() {
+				var _this = this;
+				CutString(window.location.href,function(d){
+					_this.usdt = Number(d.usdt) * Number(d.num);
+					_this.eake = Number(d.eake) * Number(d.num);
+					_this.num = Number(d.num);
+				})
+			},
+			methods: {
+				submit() {
+					var _this = this;
+					if($("#payPassword").val() == ''){
+						mui.toast('密码不能为空');
+						return false;
+					}
+					$.ajax({
+						type: "POST",
+						url: api + '/renchou',
+						data: {
+							userId: window.localStorage.getItem('userId'),
+							userId: _this.num, //倍数
+							payPassword:$("#payPassword").val()
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							} else {
+								mui.toast('支付成功！');
+								// mui.back();
+							}
+						},
+						error: function(error) {
+							console.log(error);
+							window.location.href = '../404.html';
+						}
+					});
+
+				},
+			},
+		})
+	</script>
+</html>

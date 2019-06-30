@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>探照灯</title>
+	</head>
+	<body>
+
+		<button id="btn">变换</button>
+		<button id="con">暂停</button>
+		<canvas id="canvas" width="400" height="290" style="border:1px solid black">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+		
+		<script>
+			btn.onclick = function() {
+				history.go();
+			}
+			con.onclick = function() {
+				if (this.innerHTML == '暂停') {
+					this.innerHTML = '恢复';
+					clearInterval(oTimer);
+				} else {
+					this.innerHTML = '暂停';
+					oTimer = setInterval(fnInterval, 50);
+				}
+			}
+			var canvas = document.getElementById('canvas');
+			//存储画布宽高
+			var H = 290,
+				W = 400;
+			//存储探照灯
+			var ball = {};
+			//存储照片
+			var IMG;
+			//存储照片地址
+			var URL = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=511426548,2665289200&fm=27&gp=0.jpg';
+
+			function initial() {
+				if (canvas.getContext) {
+					var cxt = canvas.getContext('2d');
+					var tempR = Math.floor(Math.random() * 30 + 20);
+					var tempX = Math.floor(Math.random() * (W - tempR) + tempR);
+					var tempY = Math.floor(Math.random() * (H - tempR) + tempR)
+					ball = {
+						x: tempX,
+						y: tempY,
+						r: tempR,
+						stepX: Math.floor(Math.random() * 21 - 10),
+						stepY: Math.floor(Math.random() * 21 - 10)
+					};
+					IMG = document.createElement('img');
+					IMG.src = URL;
+					IMG.onload = function() {
+						cxt.drawImage(IMG, 0, 0);
+					}
+				}
+			}
+
+			function update() {
+				ball.x += ball.stepX;
+				ball.y += ball.stepY;
+				bumpTest(ball);
+			}
+
+			function bumpTest(ele) {
+				//左侧
+				if (ele.x <= ele.r) {
+					ele.x = ele.r;
+					ele.stepX = -ele.stepX;
+				}
+				//右侧
+				if (ele.x >= W - ele.r) {
+					ele.x = W - ele.r;
+					ele.stepX = -ele.stepX;
+				}
+				//上侧
+				if (ele.y <= ele.r) {
+					ele.y = ele.r;
+					ele.stepY = -ele.stepY;
+				}
+				//下侧
+				if (ele.y >= H - ele.r) {
+					ele.y = H - ele.r;
+					ele.stepY = -ele.stepY;
+				}
+			}
+
+			function render() {
+				//重置画布高度，达到清空画布的效果
+				canvas.height = H;
+				if (canvas.getContext) {
+					var cxt = canvas.getContext('2d');
+					cxt.save();
+					//将画布背景涂黑
+					cxt.beginPath();
+					cxt.fillStyle = '#000';
+					cxt.fillRect(0, 0, W, H);
+					//渲染探照灯
+					cxt.beginPath();
+					cxt.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
+					cxt.fillStyle = '#000';
+					cxt.fill();
+					cxt.clip();
+					//由于使用了clip()，画布背景图片会出现在clip()区域内
+					cxt.drawImage(IMG, 0, 0);
+					cxt.restore();
+				}
+			}
+			initial();
+			clearInterval(oTimer);
+
+			function fnInterval() {
+				//更新运动状态
+				update();
+				//渲染
+				render();
+			}
+			var oTimer = setInterval(fnInterval, 50);
+		</script>
+
+	</body>
+</html>

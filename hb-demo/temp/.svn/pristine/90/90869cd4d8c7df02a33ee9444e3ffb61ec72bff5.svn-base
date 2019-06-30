@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>备份助记词</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			input::-webkit-input-placeholder,
+			textarea::-webkit-input-placeholder {
+				color: #cecece;
+				font-size: 0.36rem;
+			}
+
+			body {
+				background: #fff;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			.mui-bar-nav {
+				height: 1.94rem;
+				background: url("../../image/geren%20(1).png")no-repeat;
+				background-size: 100% 100%;
+				box-shadow: none;
+				padding-top: 0.6rem;
+			}
+
+			header.mui-bar-nav .mui-title {
+				width: auto !important;
+				margin-right: 38px;
+				padding-left: 38px;
+				box-sizing: border-box;
+			}
+
+			.mui-bar-nav a,
+			.mui-bar-nav h1 {
+				color: white;
+			}
+
+			.mui-bar-nav h1 {
+				line-height: 1.34rem;
+				font-size: 0.6rem;
+			}
+
+			/* .mui-bar-nav .mui-action-back {
+			padding-top:0.42rem ;
+		} */
+			.mui-bar-nav .mui-pull-right {
+				line-height: 1.34rem;
+				font-size: 0.46rem;
+			}
+
+
+			.contain {
+				/* border: 1px solid red; */
+				margin-top: 1rem;
+				width: 100%;
+				box-sizing: border-box;
+				padding: 2.3rem 0.9rem 0;
+			}
+
+			.template {
+				width: 100%;
+				height: 1.44rem;
+				line-height: 1.44rem;
+				padding: 0 1.2rem;
+				box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-around;
+				color: #999999;
+				font-size: 0.5rem;
+			}
+
+			.hine {
+				color: #999999;
+				font-size: 0.5rem;
+				margin: 0.6rem 0;
+			}
+
+			.confirm {
+				font-size: 0.5rem;
+				color: #fff;
+				width: 9.7rem;
+				height: 1.23rem;
+				line-height: 1.23rem;
+				background: url("../../image/btn-long.png") no-repeat center/contain;
+				color: #fff;
+				text-align: center;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 3rem;
+			}
+
+			.confirm-word {
+				width: 100%;
+				height: 1.44rem;
+				line-height: 1.44rem;
+				padding: 0 1.2rem;
+				box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+				display: flex;
+				display: -webkit-flex;
+				justify-content: flex-start;
+			}
+
+			.confirm-word>div {
+				color: #999999;
+				font-size: 0.5rem;
+				/* border: 1px solid red; */
+				width: 25%;
+				height: 1.44rem;
+				line-height: 1.44rem;
+				text-align: center;
+			}
+
+			.template-box {
+				box-sizing: border-box;
+				margin: 2rem auto 0;
+				width: 9.3rem;
+				height: 3.06rem;
+				display: flex;
+				display: -webkit-flex;
+				flex-flow: row wrap;
+				justify-content: space-between;
+				align-content: space-between;
+			}
+
+			.template-box>div {
+				width: 4.08rem;
+				height: 1.16rem;
+				line-height: 1.16rem;
+				text-align: center;
+				border: 0.06rem solid #5D14E8;
+				color: #5D14E8;
+				font-size: 0.5rem;
+				border-radius: 0.4rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<!-- <header>
+				<a href="./setPassword.html"><span>〈 返回</span></a>
+				<h1>备份助记词</h1>
+				<a href=""><span>备份</span></a>
+			</header> -->
+
+			<header class="mui-bar mui-bar-nav">
+				<a href="./setPassword.html" class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">备份助记词</h1>
+				<a href="#" class="mui-pull-right">备份</a>
+			</header>
+			<div class="contain">
+				<div class="template">
+					<span v-for="(tw,i) in templateWord" v-text="tw"></span>
+				</div>
+				<p class="hine">请按顺序点击你的助记词，以便确认备份助记词的正确。</p>
+				<div class="confirm-word">
+					<div v-for="(cw,i) in confirmWord" class="conItem" @click="deleteWord(cw)" v-text="cw"></div>
+				</div>
+
+				<div class="confirm" @click="confirmUp">确&#X3000;&#X3000;认</div>
+
+				<div class="template-box">
+					<div @click="addWord(tw)" v-for="(tw,i) in templateWord" v-text="tw"></div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init()
+		new Vue({
+			el: "#box",
+			data() {
+				return {
+					// 模板助记词
+					templateWord: [],
+					// 确认助记词
+					confirmWord: []
+				}
+			},
+			mounted(){
+				this.templateWord = window.location.href.split("?")[1].split(',').splice(0,4);
+			},
+			methods: {
+				addWord(value) {
+					if (this.confirmWord.length < this.templateWord.length && this.confirmWord.indexOf(value) == -1) {
+						this.confirmWord.push(value)
+					}
+				},
+				// 删除
+				deleteWord(value) {
+					console.log(value)
+					this.confirmWord.splice(this.confirmWord.indexOf(value), 1);
+				},
+				confirmUp() {
+					console.log(this.templateWord.toString())
+					console.log(this.confirmWord.toString())
+					if (this.templateWord.toString() == this.confirmWord.toString()) {
+						window.location.href = './login.html';
+					} else {
+						mui.toast('选择错误！')
+					}
+				}
+			}
+		})
+	</script>
+</html>

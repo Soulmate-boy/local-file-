@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>账 单</title>
+		<link rel="stylesheet" href="../../css/clearCss.css">
+		<script src="../../js/rem.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/css/mine/bill.css" />
+		<style type="text/css">
+			html {
+				background-color: white;
+			}
+			#number{
+				margin-top:1.69rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="number" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a href="../home/scan.html" class=" mui-icon mui-icon-left-nav mui-pull-left mui-action-back"></a>
+				<h1 class="mui-title">账 单</h1>
+			</header>
+<!-- 
+			<div class="tabbar">
+				<label>选择时间</label>
+				<input type="text" id="b_time" placeholder="开始时间" @focus="onblue_1($event)" v-model="beginTime">
+				<label>至</label>
+				<input type="text" id="e_time" placeholder="结束时间" @focus="onblue_2($event)" v-model="endTime">
+				<div @click="query">查询</div>
+			</div> -->
+
+			<p v-show="show" style="text-align: center;display: none;">没有记录...</p>
+	<!-- 		<img v-if="shows" src="../../image/timg%20(2).gif" style="width:20%;height:auto;margin:50% 0 0 50%;transform: translate(-50%,-50%);"
+			 alt=""> -->
+			<div v-show="show_list" >
+				 <div class="inform" v-for="(i,j) in list" style="border-bottom:1px solid rgba(14, 20, 84, 0.3);">
+				 	<!-- 上升 -->
+				 	<div class="inform-item rise">
+				 		<!-- <img src="../../image/B-icon.png"> -->
+				 		<div class="currency">ETH</div>
+				 		<div class="c-money">{{ i.type | addmin}}{{i.payedCount}}</div>
+				 		<div class="arrow-t">
+				 			<div>{{i.payTime | timer_1}}</div>
+				 			<div>{{i.payTime | timer_2}}</div>
+				 		</div>
+				 	</div>
+				 </div>
+			</div>
+		</div>
+	</body>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/translate.js"></script>
+	<script src="../../js/language.js"></script>
+	<script src="../../js/public.js"></script>
+	<script src="../../js/logding.js"></script>
+	<script>
+		mui.init()
+		new Vue({
+			el: "#number",
+			data() {
+				return {
+					list: [],
+					show_list:false,
+					beginTime: '',
+					endTime: '',
+					show: false,
+					shows: true,
+				}
+			},
+			mounted() {
+				var _this = this;
+				getDate(function(d) {
+					_this.beginTime = d
+					_this.endTime = d
+				});
+				_this.d_ajax(_this.beginTime, _this.endTime);
+			},
+			methods: {
+				query() {
+					var _this = this;
+					console.log('query!')
+					_this.brginTime = _this.brginTime;
+					_this.endTime = _this.endTime;
+					if (_this.beginTime == '' || _this.endTime == '') {
+						getDate(function(d) {
+							_this.beginTime = d
+							_this.endTime = d
+						})
+						mui.toast('请输入正确时间格式');
+						return false;
+					};
+					_this.d_ajax(_this.beginTime, _this.endTime);
+				},
+				onblue_1(e) {
+					this.beginTime = '';
+				},
+				onblue_2(e) {
+					this.endTime = '';
+				},
+				d_ajax(beg, end) {
+					var _this = this;
+					_this.shows = true;
+					$.ajax({
+						type: "POST",
+						url: api + '/pay/payRecord',
+						data: {
+							userId: window.localStorage.getItem('userId'),
+							startDate: beg,
+							endDate: end,
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								mui.toast(data.msg);
+								return false;
+							};
+							_this.list = data.data;
+							_this.show_list = true;
+							if (_this.list.length == 0) {
+								_this.show = true;
+								_this.shows = false;
+							}
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					})
+				}
+			},
+			watch: {
+				beginTime(nval, oval) {
+					return nval;
+				},
+				endTime(nval, oval) {
+					return nval;
+				}
+			},
+			filters:{
+				timer_1(val){
+					return val.trim().split(/\s+/)[0];
+				},
+				timer_2(val){
+					return val.trim().split(/\s+/)[1];
+				},
+				addmin(val){
+					if(val == 'min'){
+						return "-"
+					};
+					if(val == 'add'){
+						return "+"
+					};
+				}
+			}
+		})
+	</script>
+</html>
